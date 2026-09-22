@@ -18,13 +18,29 @@ import Home from "./user/pages/home/Home";
 import NeedDiscovery from "./user/pages/home/NeedDiscovery";
 import SearchResults from "./user/pages/home/SearchResults";
 
+// AI Assistant
+import AIAssistant from "./user/pages/ai/AIAssistant";
+import AIReview from "./user/pages/ai/AIReview";
+import AIWorkflow from "./user/pages/ai/AIWorkflow";
+
 // Services
 import ServiceCategories from "./user/pages/services/ServiceCategories";
 import ServiceList from "./user/pages/services/ServiceList";
 import ServiceDetails from "./user/pages/services/ServiceDetails";
+import ServiceEligibility from "./user/pages/services/ServiceEligibility";
 import EligibilityResult from "./user/pages/services/EligibilityResult";
+import SavedServices from "./user/pages/services/SavedServices";
+import RecommendedServices from "./user/pages/services/RecommendedServices";
+
+// Identity
+import GovernmentIdentity from "./user/pages/identity/GovernmentIdentity";
+import ConnectIdentity from "./user/pages/identity/ConnectIdentity";
+import IdentityOtp from "./user/pages/identity/IdentityOtp";
+import IdentitySuccess from "./user/pages/identity/IdentitySuccess";
+import VerifiedInformation from "./user/pages/identity/VerifiedInformation";
 
 // Application flow
+import StartApplication from "./user/pages/applications/StartApplication";
 import ApplicationForm from "./user/pages/applications/ApplicationForm";
 import VerifiedInfo from "./user/pages/applications/VerifiedInfo";
 import DocumentUpload from "./user/pages/applications/DocumentUpload";
@@ -50,7 +66,8 @@ function GlobalBackground() {
   const location = useLocation();
 
   useEffect(() => {
-    if (location.pathname === '/home') {
+    // Disable generic bg image for home, AI, workflow, and recommended screens
+    if (['/home', '/ai', '/ai/review', '/ai/workflow', '/recommended', '/services/recommended', '/saved'].includes(location.pathname)) {
       document.body.style.backgroundImage = 'none';
       document.body.style.backgroundColor = '#f8fafc';
     } else {
@@ -86,14 +103,33 @@ function App() {
         <Route path="/home" element={<Home />} />
         <Route path="/discover" element={<NeedDiscovery />} />
         <Route path="/search" element={<SearchResults />} />
+        
+        {/* ── AI Assistant Prototype ── */}
+        <Route path="/ai" element={<AIAssistant />} />
+        <Route path="/ai/review" element={<AIReview />} />
+        <Route path="/ai/workflow" element={<AIWorkflow />} />
 
         {/* ── Services ── */}
         <Route path="/services" element={<ServiceCategories />} />
         <Route path="/services/:category" element={<ServiceList />} />
+        <Route path="/service-details/:id" element={<ServiceDetails />} />
         <Route path="/service-details" element={<ServiceDetails />} />
+        <Route path="/eligibility/:id" element={<ServiceEligibility />} />
         <Route path="/eligibility-result" element={<EligibilityResult />} />
+        <Route path="/saved" element={<SavedServices />} />
+        <Route path="/recommended" element={<RecommendedServices />} />
+        <Route path="/services/recommended" element={<RecommendedServices />} />
+
+        {/* ── Identity & Verified Information Flow ── */}
+        <Route path="/identity" element={<GovernmentIdentity />} />
+        <Route path="/identity/connect" element={<ConnectIdentity />} />
+        <Route path="/identity/otp" element={<IdentityOtp />} />
+        <Route path="/identity/success" element={<IdentitySuccess />} />
+        <Route path="/verified-info" element={<VerifiedInformation />} />
+        <Route path="/profile/verified-info" element={<VerifiedInformation />} />
 
         {/* ── Application flow ── */}
+        <Route path="/apply/:serviceId/start" element={<StartApplication />} />
         <Route path="/apply/:serviceId" element={<ApplicationForm />} />
         <Route path="/apply/:serviceId/verified-info" element={<VerifiedInfo />} />
         <Route path="/apply/:serviceId/documents" element={<DocumentUpload />} />

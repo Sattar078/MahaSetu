@@ -1,50 +1,94 @@
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { AppHeader } from '../../components/Navigation';
-import { SearchBar } from '../../components/FormInput';
-import { PrimaryButton } from '../../components/Buttons';
-import { ChevronRight } from 'lucide-react';
-
-const results = [
-  { id: 1, title: 'Scholarship Services', dept: 'Education Department', tag: 'Education' },
-  { id: 2, title: 'Student Welfare Scheme', dept: 'Social Welfare Department', tag: 'Social Welfare' },
-  { id: 3, title: 'Skill Development Support', dept: 'Employment Department', tag: 'Employment' },
-  { id: 4, title: 'Education Loan Scheme', dept: 'Education Department', tag: 'Education' },
-  { id: 5, title: 'Scholarship for Minorities', dept: 'Education Department', tag: 'Education' },
-];
+import MainLayout from '../../components/MainLayout';
+import { Search, ChevronRight, FileText } from 'lucide-react';
+import { demoAPI } from '../../../utils/demoState';
 
 export default function SearchResults() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [query, setQuery] = useState(searchParams.get('q') || '');
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const q = searchParams.get('q') || '';
+    setQuery(q);
+    if (q) {
+      setResults(demoAPI.searchServices(q));
+    } else {
+      setResults([]);
+    }
+  }, [searchParams]);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    if (query.trim()) {
+      setSearchParams({ q: query });
+    }
+  };
 
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-white">
-      <AppHeader title="Search Results" onBack={() => navigate(-1)} />
+    <MainLayout>
+      <div className="flex flex-col min-h-[100dvh] bg-slate-50">
+        <AppHeader title="Search Results" onBack={() => navigate(-1)} />
 
-      <div className="px-5 pt-4 pb-6 flex-1">
-        <SearchBar placeholder="scholarship" />
+        <div className="px-5 pt-4 pb-6 flex-1">
+          <form onSubmit={handleSearch} className="relative mb-6">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={20} />
+            <input 
+              type="text"
+              placeholder="Search government services..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="w-full bg-white border border-slate-200 rounded-2xl py-3 pl-12 pr-4 text-sm font-medium focus:outline-none focus:border-[#000080] focus:ring-1 focus:ring-[#000080] shadow-sm transition-all"
+            />
+          </form>
 
-        <p className="text-xs text-slate-500 mt-4 mb-3">Found <span className="font-semibold text-slate-700">{results.length} services</span></p>
+          {query && (
+            <p className="text-xs text-slate-500 mb-4">
+              Found <span className="font-bold text-slate-900">{results.length} services</span> for "{query}"
+            </p>
+          )}
 
-        <div className="space-y-2.5">
-          {results.map((r) => (
-            <button
-              key={r.id}
-              onClick={() => navigate('/service-details')}
-              className="w-full flex items-center justify-between p-3.5 bg-white border border-slate-100 rounded-xl hover:border-blue-200 transition text-left"
-            >
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className="text-[9px] font-semibold bg-blue-50 text-[#0d599f] px-2 py-0.5 rounded-full">{r.tag}</span>
-                </div>
-                <p className="text-xs font-semibold text-slate-800">{r.title}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5">{r.dept}</p>
+          {results.length > 0 ? (
+            <div className="space-y-3">
+              {results.map((r) => (
+                <button
+                  key={r.id}
+                  onClick={() => navigate(`/service-details/${r.id}`)}
+                  className="w-full flex flex-col p-4 bg-white border border-slate-200 shadow-sm rounded-2xl hover:border-[#0d599f] transition text-left"
+                >
+                  <div className="flex items-start justify-between w-full mb-2">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#0d599f]">
+                        <FileText size={20} />
+                      </div>
+                      <div>
+                        <h4 className="font-bold text-sm text-slate-900">{r.name}</h4>
+                        <p className="text-[10px] text-slate-500">{r.department}</p>
+                      </div>
+                    </div>
+                  </div>
+                  <p className="text-xs text-slate-600 line-clamp-2">{r.description}</p>
+                </button>
+              ))}
+            </div>
+          ) : (
+            query && (
+              <div className="text-center py-10">
+                <p className="text-sm font-bold text-slate-700 mb-2">No matching service found.</p>
+                <button 
+                  onClick={() => navigate('/services')}
+                  className="text-xs text-[#0d599f] font-bold mt-4 px-4 py-2 bg-blue-50 rounded-xl"
+                >
+                  Browse All Services
+                </button>
               </div>
-              <PrimaryButton className="!w-auto !py-1.5 !px-3 !text-[10px] ml-3 shrink-0" onClick={(e) => { e.stopPropagation(); navigate('/service-details'); }}>
-                Apply
-              </PrimaryButton>
-            </button>
-          ))}
+            )
+          )}
         </div>
       </div>
-    </div>
+    </MainLayout>
   );
 }

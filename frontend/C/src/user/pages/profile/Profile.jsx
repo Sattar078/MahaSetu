@@ -6,14 +6,14 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
-  { id: 'personal', label: 'Personal Information', icon: User, route: null },
-  { id: 'contact', label: 'Contact Information', icon: Phone, route: null },
-  { id: 'address', label: 'Address', icon: MapPin, route: null },
+  { id: 'personal', label: 'Personal Information', icon: User, route: '/verified-info?category=personal' },
+  { id: 'contact', label: 'Contact Information', icon: Phone, route: '/verified-info?category=contact' },
+  { id: 'address', label: 'Address', icon: MapPin, route: '/verified-info?category=address' },
   { id: 'education', label: 'Education', icon: GraduationCap, route: null },
-  { id: 'verified', label: 'Verified Information', icon: ShieldCheck, route: null },
+  { id: 'verified', label: 'Verified Information', icon: ShieldCheck, route: '/verified-info' },
   { id: 'documents', label: 'Documents', icon: FileText, route: '/documents' },
   { id: 'applications', label: 'Applications', icon: FolderArchive, route: '/applications' },
-  { id: 'consents', label: 'Consents', icon: Lock, route: '/privacy' },
+  { id: 'consents', label: 'Consents & Sharing', icon: Lock, route: '/privacy' },
 ];
 
 export default function Profile() {

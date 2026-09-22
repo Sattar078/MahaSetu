@@ -1,49 +1,69 @@
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AppHeader } from '../../components/Navigation';
 import { PrimaryButton } from '../../components/Buttons';
-import { CheckCircle, Clock, Plus, ChevronRight } from 'lucide-react';
-
-const documents = [
-  { id: 'income', title: 'Income Certificate', dept: 'Revenue Department', status: 'Verified', statusColor: 'bg-emerald-50 text-emerald-600', date: '12 May 2026' },
-  { id: 'caste', title: 'Caste Certificate', dept: 'Social Welfare Department', status: 'Verified', statusColor: 'bg-emerald-50 text-emerald-600', date: '10 May 2026' },
-  { id: 'residence', title: 'Residence Certificate', dept: 'Revenue Department', status: 'Verified', statusColor: 'bg-emerald-50 text-emerald-600', date: '10 May 2026' },
-];
+import { CheckCircle2, Search, Plus, ChevronRight } from 'lucide-react';
 
 export default function DocumentWallet() {
   const navigate = useNavigate();
 
+  // Hardcoded to match user's mockup precisely
+  const documents = [
+    { name: "Identity Proof", status: "Verified", available: true, date: "12 Aug 2026" },
+    { name: "Address Proof", status: "Verified", available: true },
+    { name: "Income Proof", status: "Verified", available: true }
+  ];
+
   return (
-    <div className="flex flex-col min-h-[100dvh] bg-white">
-      <AppHeader title="My Documents" onBack={() => navigate('/profile')} />
+    <div className="flex flex-col min-h-[100dvh] bg-slate-50">
+      <AppHeader title="MY DOCUMENTS" onBack={() => navigate('/home')} />
 
       <div className="flex-1 px-5 pt-4 pb-6 flex flex-col">
-        <div className="space-y-3">
-          {documents.map((doc) => (
-            <button
-              key={doc.id}
-              onClick={() => navigate(`/documents/${doc.id}`)}
-              className="w-full flex items-center justify-between p-4 bg-white border border-slate-100 rounded-xl hover:border-blue-200 transition text-left"
-            >
-              <div className="flex-1 min-w-0">
-                <p className="text-xs font-bold text-slate-800">{doc.title}</p>
-                <p className="text-[10px] text-slate-400 mt-0.5">{doc.dept}</p>
-                <div className="flex items-center gap-2 mt-2">
-                  <span className={`text-[9px] font-semibold px-2 py-0.5 rounded-lg ${doc.statusColor}`}>
-                    <span className="inline-flex items-center gap-1">
-                      <CheckCircle size={8} /> {doc.status}
-                    </span>
-                  </span>
-                  <span className="text-[10px] text-slate-300">{doc.date}</span>
+        {/* Search Bar */}
+        <div className="bg-white rounded-xl px-4 py-3 flex items-center gap-3 border border-slate-200 mb-6 shadow-sm">
+          <Search size={18} className="text-slate-400" />
+          <input 
+            type="text" 
+            placeholder="Search documents" 
+            className="bg-transparent border-none outline-none text-sm w-full text-slate-700 placeholder:text-slate-400"
+          />
+        </div>
+
+        {/* Document List */}
+        <div className="space-y-4">
+          {documents.map((doc, idx) => (
+            <div key={idx} className="bg-white p-4 rounded-xl shadow-sm border border-slate-200 flex flex-col relative overflow-hidden">
+              {/* Accent Line */}
+              <div className="absolute left-0 top-0 bottom-0 w-1 bg-[#138808]"></div>
+              
+              <div className="flex items-start gap-3 pl-2">
+                <CheckCircle2 size={18} className="text-[#138808] shrink-0 mt-0.5" />
+                
+                <div className="flex-1">
+                  <h3 className="text-sm font-bold text-slate-800">{doc.name}</h3>
+                  <p className="text-[11px] font-medium mt-0.5 text-[#138808]">
+                    {doc.status}
+                  </p>
+                  
+                  {doc.date && (
+                    <p className="text-[10px] text-slate-400 mt-1 font-medium">Added: {doc.date}</p>
+                  )}
                 </div>
               </div>
-              <ChevronRight size={16} className="text-slate-300 shrink-0" />
-            </button>
+
+              <div className="flex justify-end mt-3 border-t border-slate-50 pt-3">
+                <button className="flex items-center gap-1 text-[11px] font-bold text-[#000080] hover:text-blue-900 transition-colors">
+                  View <ChevronRight size={14} />
+                </button>
+              </div>
+            </div>
           ))}
         </div>
 
-        <div className="mt-auto pt-6">
-          <PrimaryButton className="flex items-center justify-center gap-2">
-            <Plus size={16} /> Add Document
+        {/* Upload Button */}
+        <div className="mt-auto pt-8">
+          <PrimaryButton className="flex items-center justify-center gap-2 w-full py-3.5 shadow-md">
+            <Plus size={18} /> Upload Document
           </PrimaryButton>
         </div>
       </div>

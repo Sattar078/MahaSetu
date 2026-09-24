@@ -411,7 +411,6 @@ const INITIAL_STATE = {
       icon: "🚘"
     }
   ],
-  savedServices: [],
   applications: [],
   notifications: [],
   chatHistory: [
@@ -1467,7 +1466,7 @@ export const demoAPI = {
     this.updateState({ consentSettings: settings });
     try {
       localStorage.setItem('dowlet1_consent_settings', JSON.stringify(settings));
-    } catch (e) {}
+    } catch (error) { void error; }
     return settings;
   },
 
@@ -3074,7 +3073,7 @@ export function updateProfile(data) {
 export function saveProfile(data) {
   try {
     localStorage.setItem('dowlet1_profile', JSON.stringify(data));
-  } catch (e) {}
+  } catch (error) { void error; }
 }
 
 /**
@@ -3114,7 +3113,7 @@ export function updateNotificationSetting(key, value) {
   demoAPI.updateState({ notificationSettings: current });
   try {
     localStorage.setItem('dowlet1_notif_settings', JSON.stringify(current));
-  } catch (e) {}
+  } catch (error) { void error; }
   return current;
 }
 
@@ -3137,7 +3136,7 @@ export function updateLanguage(lang) {
   demoAPI.updateState({ language: lang });
   try {
     localStorage.setItem('dowlet1_language', lang);
-  } catch (e) {}
+  } catch (error) { void error; }
   return lang;
 }
 
@@ -3162,7 +3161,7 @@ export function updateSecuritySetting(key, value) {
   demoAPI.updateState({ securitySettings: current });
   try {
     localStorage.setItem('dowlet1_security_settings', JSON.stringify(current));
-  } catch (e) {}
+  } catch (error) { void error; }
   return current;
 }
 
@@ -3183,7 +3182,7 @@ export function submitFeedback(data) {
   demoAPI.updateState({ feedback: state.feedback });
   try {
     localStorage.setItem('dowlet1_feedback', JSON.stringify(state.feedback));
-  } catch (e) {}
+  } catch (error) { void error; }
   return item;
 }
 
@@ -3205,7 +3204,7 @@ export function submitSupportRequest(data) {
   demoAPI.updateState({ supportRequests: state.supportRequests });
   try {
     localStorage.setItem('dowlet1_support_requests', JSON.stringify(state.supportRequests));
-  } catch (e) {}
+  } catch (error) { void error; }
   return item;
 }
 
@@ -3238,7 +3237,7 @@ export function logout(navigate) {
     localStorage.removeItem('dowlet1_auth_token');
     localStorage.removeItem('dowlet1_session');
     localStorage.removeItem('dowlet1_active_role');
-  } catch (e) {}
+  } catch (error) { void error; }
   if (navigate) navigate('/login');
 }
 
@@ -3268,7 +3267,7 @@ export function resetProfileDemo() {
     localStorage.removeItem('dowlet1_notif_settings');
     localStorage.removeItem('dowlet1_language');
     localStorage.removeItem('dowlet1_security_settings');
-  } catch (e) {}
+  } catch (error) { void error; }
   return INITIAL_PROFILE;
 }
 

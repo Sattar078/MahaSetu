@@ -43,7 +43,7 @@ export default function AIWorkflow() {
     }, 1200);
 
     return () => clearInterval(interval);
-  }, [formData, navigate]);
+  }, [formData, navigate, steps.length]);
 
   if (!formData) return null;
 

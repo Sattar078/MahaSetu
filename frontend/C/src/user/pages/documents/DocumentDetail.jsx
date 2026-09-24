@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { 
   AppHeader 
@@ -36,17 +36,17 @@ export default function DocumentDetail() {
   const [loading, setLoading] = useState(null);
   const [toastMessage, setToastMessage] = useState(null);
 
-  useEffect(() => {
-    loadDocument();
-  }, [id]);
-
-  const loadDocument = () => {
+  const loadDocument = useCallback(() => {
     const found = getDocumentById(id);
     setDoc(found);
     if (found) {
       setUsage(getDocumentUsage(found.id));
     }
-  };
+  }, [id]);
+
+  useEffect(() => {
+    loadDocument();
+  }, [loadDocument]);
 
   const showToast = (msg) => {
     setToastMessage(msg);

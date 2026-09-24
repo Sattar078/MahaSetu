@@ -4,7 +4,7 @@ import {
   Search, Plus, CheckCircle2, Clock, AlertTriangle, HelpCircle,
   FileText, ShieldCheck, ArrowRight, X, Eye, RefreshCw, Trash2, 
   ExternalLink, Download, Share2, Sparkles, Check, Lock, ChevronRight,
-  Filter, RotateCcw, AlertCircle, FileCheck
+  Filter, RotateCcw, AlertCircle, FileCheck, Upload
 } from 'lucide-react';
 import { AppHeader } from '../../components/Navigation';
 import MainLayout from '../../components/MainLayout';

@@ -20,7 +20,11 @@ export default function OfficerDashboard() {
   const [selectedApp, setSelectedApp] = useState(null);
 
   useEffect(() => {
-    refreshData();
+    const apps = getOfficerPendingApplications();
+    setApplications(apps);
+    if (apps.length > 0) {
+      setSelectedApp(apps[0]);
+    }
   }, []);
 
   const refreshData = () => {

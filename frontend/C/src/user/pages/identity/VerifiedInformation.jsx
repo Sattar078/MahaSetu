@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { AppHeader } from '../../components/Navigation';
 import { 
@@ -41,6 +41,13 @@ export default function VerifiedInformation() {
 
   const consentSectionRef = useRef(null);
 
+  const openEditModal = useCallback((catKey) => {
+    const current = verifiedInfo[catKey] || {};
+    setEditFormData({ ...current });
+    setEditCategoryModal(catKey);
+    setViewCategoryModal(null);
+  }, [verifiedInfo]);
+
   // Load from central state
   useEffect(() => {
     demoAPI.init();
@@ -57,7 +64,7 @@ export default function VerifiedInformation() {
         setViewCategoryModal(cat);
       }
     }
-  }, [location.search]);
+  }, [location.search, openEditModal]);
 
   const loadAllData = () => {
     const info = getVerifiedInformation();
@@ -71,14 +78,6 @@ export default function VerifiedInformation() {
   const showToast = (msg) => {
     setToastMessage(msg);
     setTimeout(() => setToastMessage(null), 3500);
-  };
-
-  // Open Edit Modal
-  const openEditModal = (catKey) => {
-    const current = verifiedInfo[catKey] || {};
-    setEditFormData({ ...current });
-    setEditCategoryModal(catKey);
-    setViewCategoryModal(null);
   };
 
   // Handle Save Form

@@ -11,7 +11,7 @@ export default function IdentitySuccess() {
     // Update mock state to verified
     const user = demoAPI.getUser();
     if (user) {
-      demoAPI.updateUser({ ...user, isIdentityVerified: true });
+      demoAPI.updateState({ user: { ...user, isIdentityVerified: true } });
     }
   }, []);
 

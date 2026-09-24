@@ -74,7 +74,7 @@ export default function ServiceEligibility() {
               <div className="w-16 h-16 bg-emerald-50 rounded-full flex items-center justify-center mx-auto mb-4 text-emerald-500">
                 <CheckCircle2 size={32} />
               </div>
-              <h2 className="text-[10px] font-bold text-[#0d599f] tracking-wider uppercase mb-2">Prototype Eligibility Check</h2>
+              <h2 className="text-[10px] font-bold text-[#0d599f] tracking-wider uppercase mb-2">Eligibility Verification</h2>
               <p className="text-sm text-slate-600">You may continue to the application process.</p>
             </div>
 

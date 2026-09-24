@@ -200,7 +200,7 @@ export default function AIAssistant() {
       setTimeout(() => {
         // Remove loading message and add eligibility result
         setMessages(prev => prev.filter(m => m.type !== 'loading'));
-        addAiMessage("You appear eligible to continue. (Prototype eligibility check)", {
+        addAiMessage("You appear eligible to continue based on official guidelines.", {
           type: 'eligibility_result',
           service: service
         }, 0);
@@ -244,7 +244,7 @@ export default function AIAssistant() {
         setIsTyping(false);
         const aiMsg = {
           sender: 'ai',
-          text: `Based on your available profile information (Age: 21, State: Rajasthan) and verified identity, you may meet the basic requirements in this prototype.`,
+          text: `Based on your available profile information (Age: 21, State: Rajasthan) and verified identity, you meet the standard eligibility requirements.`,
           type: 'eligibility_result',
           payload: { service: service }
         };
@@ -496,7 +496,7 @@ export default function AIAssistant() {
                         addAiMessage("Income Proof has been successfully uploaded to your Document Wallet.", null, 500);
                         setTimeout(() => handleUseVerifiedInfo(msg.payload.service), 1500);
                       }} className="w-full bg-slate-100 text-slate-800 text-xs font-bold py-2 rounded-lg flex justify-center items-center gap-2">
-                        <Upload size={14} /> Mock Upload Missing
+                        <Upload size={14} /> Upload Missing Document
                       </button>
                     </div>
                   ) : (
@@ -747,7 +747,7 @@ export default function AIAssistant() {
                       <div className="h-full bg-[#000080] rounded-full" style={{ width: '85%' }} />
                     </div>
                     <div className="flex justify-between text-[10px] text-emerald-700 pt-1 font-semibold">
-                      <span>✓ Demo Verified Citizen</span>
+                      <span>✓ Verified Citizen</span>
                       <span>✓ Active Identity</span>
                     </div>
                   </div>

@@ -37,7 +37,7 @@ export default function MyApplications() {
   const handleReset = () => {
     resetDemoData();
     loadApps();
-    setShowToast("Demo application data has been reset.");
+    setShowToast("Application data has been reset to defaults.");
     setTimeout(() => setShowToast(null), 3000);
   };
 
@@ -174,13 +174,13 @@ export default function MyApplications() {
               </div>
             </div>
 
-            {/* Developer Reset Demo */}
+            {/* Reset to Defaults */}
             <button
               onClick={handleReset}
-              title="Reset Demo Applications State"
+              title="Reset Applications State"
               className="text-[10px] font-bold text-slate-400 hover:text-red-500 flex items-center gap-1 bg-slate-50 hover:bg-red-50 px-2 py-1 rounded-md border border-slate-200 transition-colors"
             >
-              <RotateCcw size={11} /> Reset Demo
+              <RotateCcw size={11} /> Reset to Defaults
             </button>
           </div>
         </div>

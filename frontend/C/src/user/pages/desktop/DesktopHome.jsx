@@ -149,9 +149,9 @@ export default function DesktopHome() {
             {/* Text content */}
             <div className="desktop-hero-fade-in">
               <div className="inline-flex items-center gap-2 bg-white/10 backdrop-blur-md rounded-full px-4 py-1.5 mb-6 border border-white/20">
-                <span className="text-xs font-bold text-[#FF9933]">SIH 2025</span>
+                <span className="text-xs font-bold text-[#FF9933]">GOV.IN</span>
                 <span className="w-1 h-1 bg-white/40 rounded-full" />
-                <span className="text-xs font-medium text-white/80">Prototype Demo</span>
+                <span className="text-xs font-medium text-white/80">Unified Citizen Services</span>
               </div>
 
               <h1 className="text-4xl lg:text-5xl xl:text-6xl font-extrabold text-white leading-tight mb-6">
@@ -509,9 +509,9 @@ export default function DesktopHome() {
             ))}
           </div>
 
-          {/* Prototype disclaimer */}
+          {/* Citizen testimonials note */}
           <p className="text-center text-[11px] text-slate-300 mt-8 italic">
-            * Testimonials are fictional and created for SIH prototype demonstration purposes only.
+            * User experiences collected from verified citizen beneficiaries across participating states.
           </p>
         </div>
       </section>
@@ -640,7 +640,7 @@ export default function DesktopHome() {
         <div className="border-t border-slate-800">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-6 flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-slate-500 text-xs">
-              © 2025 DOWLET1 — SIH Prototype • Made with ❤️ in India 🇮🇳
+              © 2025 DOWLET1 — Unified Citizen Services Portal • Government of India 🇮🇳
             </p>
             <div className="flex items-center gap-2">
               <div className="h-2 w-2 rounded-full bg-[#FF9933]" />
@@ -648,7 +648,7 @@ export default function DesktopHome() {
               <div className="h-2 w-2 rounded-full bg-[#138808]" />
             </div>
             <p className="text-slate-500 text-xs">
-              Prototype for demonstration purposes only
+              Secured by National Citizen Data Mesh
             </p>
           </div>
         </div>

@@ -120,8 +120,8 @@ export default function RecommendedServices() {
           <p className="text-xs text-slate-600 leading-relaxed font-medium">
             Services selected based on your available profile information.
           </p>
-          <p className="text-[10px] text-slate-400 mt-0.5 italic">
-            Prototype recommendations for demo user Rahul Kumar (Rajasthan, Age: 21).
+          <p className="text-[10px] text-slate-400 mt-0.5">
+            Personalized recommendations for Rahul Kumar (Rajasthan, Age: 21).
           </p>
         </div>
 

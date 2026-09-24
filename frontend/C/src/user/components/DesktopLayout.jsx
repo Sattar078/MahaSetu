@@ -54,7 +54,7 @@ export default function DesktopLayout({ children }) {
             <span className="text-xs">🇮🇳</span>
             <span className="font-semibold tracking-wide">Government of India • Unified Citizen Services Portal</span>
             <span className="text-white/40">|</span>
-            <span className="text-white/80">Smart India Hackathon Prototype</span>
+            <span className="text-white/80">Official Citizen Portal</span>
           </div>
           <div className="flex items-center gap-4 text-white/80">
             <span className="hover:text-white cursor-pointer transition-colors" onClick={() => navigate('/need-discovery')}>Help Me Choose</span>
@@ -205,7 +205,7 @@ export default function DesktopLayout({ children }) {
                     <span className="text-xs font-bold text-slate-800 group-hover:text-[#000080] transition-colors">{profile.fullName || 'Rahul Kumar'}</span>
                     <CheckCircle2 size={12} className="text-[#138808]" />
                   </div>
-                  <span className="text-[9px] text-slate-400 font-medium">Demo Verified Citizen</span>
+                  <span className="text-[9px] text-slate-400 font-medium">Verified Citizen</span>
                 </div>
                 <div className="w-8 h-8 rounded-lg bg-[#000080] text-white flex items-center justify-center font-bold text-xs shadow-sm">
                   {profile.fullName ? profile.fullName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'RK'}
@@ -236,7 +236,7 @@ export default function DesktopLayout({ children }) {
                 </div>
                 <div>
                   <span className="font-extrabold text-base tracking-wide text-white">DOWLET1</span>
-                  <span className="ml-2 text-[10px] bg-white/10 text-white/80 px-2 py-0.5 rounded font-mono">SIH PROTOTYPE</span>
+                  <span className="ml-2 text-[10px] bg-white/10 text-white/80 px-2 py-0.5 rounded font-mono">OFFICIAL PORTAL</span>
                 </div>
               </div>
               <p className="text-slate-400 text-xs leading-relaxed mb-4 max-w-sm">
@@ -314,7 +314,7 @@ export default function DesktopLayout({ children }) {
         <div className="border-t border-slate-800 bg-slate-950">
           <div className="max-w-7xl mx-auto px-6 lg:px-8 py-4 flex flex-col sm:flex-row items-center justify-between gap-3">
             <p className="text-slate-500 text-[11px] text-center sm:text-left">
-              © 2025 DOWLET1 • Smart India Hackathon (SIH) Prototype • Made with ❤️ in India 🇮🇳
+              © 2025 DOWLET1 • Unified Citizen Services Portal • Government of India 🇮🇳
             </p>
             <div className="flex items-center gap-2">
               <span className="text-[10px] text-slate-400">National Flag Accent:</span>

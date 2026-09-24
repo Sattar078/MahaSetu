@@ -42,7 +42,7 @@ export default function AdminDashboard() {
                 </span>
               </div>
               <p className="text-[11px] text-slate-400">
-                National Citizen Data Mesh • Architecture Monitoring & SIH Telemetry
+                National Citizen Data Mesh • Architecture Monitoring & System Telemetry
               </p>
             </div>
           </div>
@@ -162,10 +162,10 @@ export default function AdminDashboard() {
 
             <div className="bg-gradient-to-br from-[#000080] to-blue-950 text-white rounded-3xl p-6 shadow-md">
               <h4 className="font-extrabold text-sm mb-2 text-[#FF9933]">
-                Smart India Hackathon 2024-2025 Evaluation
+                Unified Citizen Services Architecture
               </h4>
               <p className="text-xs text-blue-100/80 leading-relaxed mb-4">
-                This console demonstrates real-time end-to-end telemetry for unified citizen onboarding, cross-departmental verification, and single-click access.
+                This console provides real-time end-to-end telemetry for unified citizen onboarding, cross-departmental verification, and single-click access.
               </p>
               <button
                 onClick={handleSwitchToCitizen}
@@ -183,7 +183,7 @@ export default function AdminDashboard() {
       <footer className="bg-slate-950 text-white text-xs py-4 border-t border-slate-800 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <p className="text-slate-500 text-[11px]">
-            DOWLET1 Administrative Oversight Console • Made for SIH Prototype
+            DOWLET1 Administrative Oversight Console • Official Citizen Portal Operations
           </p>
           <span className="text-[10px] text-emerald-400 font-mono">
             Gateway Status: Healthy (100%)

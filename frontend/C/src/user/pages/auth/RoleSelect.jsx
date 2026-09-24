@@ -52,7 +52,7 @@ export default function RoleSelect() {
       color: 'text-emerald-300',
       bg: 'bg-emerald-500/15',
       border: 'border-emerald-500/30',
-      badge: 'SuperAdmin / SIH Jury',
+      badge: 'SuperAdmin / System Auditor',
       badgeColor: 'bg-emerald-500/20 text-emerald-200 border-emerald-500/30',
       features: ['Scheme Quota Health', 'Mesh Latency & API Uptime', 'Security & Access Logs'],
       actionText: 'Admin Command Console',

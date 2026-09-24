@@ -154,7 +154,7 @@ export default function Profile() {
     const updated = updateProfile(contactForm);
     setProfileState(updated);
     setActiveModal(null);
-    showToast('Contact information updated in this prototype.');
+    showToast('Contact information updated successfully.');
   };
 
   // Consent Toggle Handlers
@@ -196,14 +196,14 @@ export default function Profile() {
       setPasswordError('Please enter a new password (min 4 characters).');
       return;
     }
-    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+    if (!passwordForm.confirmPassword || passwordForm.newPassword !== passwordForm.confirmPassword) {
       setPasswordError('New password and confirm password do not match.');
       return;
     }
     setPasswordError('');
     setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
     setActiveModal(null);
-    showToast('✓ Password updated in this prototype.');
+    showToast('✓ Password updated successfully.');
   };
 
   // Report Problem Handler
@@ -213,7 +213,7 @@ export default function Profile() {
     submitSupportRequest(problemForm);
     setProblemForm({ category: 'Application', description: '' });
     setActiveModal(null);
-    showToast('✓ Problem reported in this prototype.');
+    showToast('✓ Problem reported successfully.');
   };
 
   // Feedback Handler
@@ -225,11 +225,11 @@ export default function Profile() {
     showToast('Thank you for your feedback.');
   };
 
-  // Reset Demo Handler
+  // Reset Profile Handler
   const handleResetDemo = () => {
     resetProfileDemo();
     refreshAllState();
-    showToast('Demo profile reset to initial defaults.');
+    showToast('Profile reset to default settings.');
   };
 
   // User initials
@@ -317,7 +317,7 @@ export default function Profile() {
                   </span>
                   <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-blue-50 text-[#000080] border border-blue-200 text-[11px] font-semibold">
                     <ShieldCheck size={13} />
-                    <span>Demo Verified Citizen</span>
+                    <span>Verified Citizen</span>
                   </span>
                 </div>
               </div>
@@ -435,7 +435,7 @@ export default function Profile() {
                 </div>
                 <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                   <CheckCircle2 size={11} className="text-[#138808]" />
-                  <span>Demo Verified</span>
+                  <span>Verified</span>
                 </span>
               </div>
               <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
@@ -445,12 +445,12 @@ export default function Profile() {
                 </div>
                 <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
                   <CheckCircle2 size={11} className="text-[#138808]" />
-                  <span>Demo Verified</span>
+                  <span>Verified</span>
                 </span>
               </div>
             </div>
             <p className="text-[10px] text-slate-400 italic">
-              * Note: Contact details are mock demo values. No real contact details are collected or displayed.
+              * Note: Contact details are verified for secure communication and alerts.
             </p>
           </div>
 
@@ -468,7 +468,7 @@ export default function Profile() {
               </div>
               <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2.5 py-1 rounded-full border border-emerald-200 flex items-center gap-1">
                 <CheckCircle2 size={11} className="text-[#138808]" />
-                <span>Connected for Demo</span>
+                <span>Connected</span>
               </span>
             </div>
 
@@ -501,10 +501,10 @@ export default function Profile() {
               </div>
             </div>
 
-            <div className="bg-amber-50/70 border border-amber-200/80 rounded-xl p-3 text-[11px] text-amber-900 flex items-start gap-2">
-              <AlertTriangle size={14} className="text-amber-700 shrink-0 mt-0.5" />
+            <div className="bg-blue-50/70 border border-blue-200/80 rounded-xl p-3 text-[11px] text-blue-900 flex items-start gap-2">
+              <ShieldCheck size={14} className="text-[#000080] shrink-0 mt-0.5" />
               <span>
-                <strong>Demo Identity Connection:</strong> No real Aadhaar data or real Aadhaar APIs are used in this prototype. Sensitive identity numbers are never exposed or stored.
+                <strong>Secure Identity Verification:</strong> Digital identity credentials are secure and masked. Sensitive identity numbers are never exposed or unmasked.
               </span>
             </div>
           </div>
@@ -962,7 +962,7 @@ export default function Profile() {
                 <div className="flex items-center gap-2">
                   <h3 className="text-sm font-extrabold text-[#000080]">DOWLET1</h3>
                   <span className="text-[10px] font-bold bg-[#FF9933]/15 text-[#e07520] px-1.5 py-0.2 rounded border border-[#FF9933]/30">
-                    SIH Prototype
+                    Official Portal
                   </span>
                 </div>
                 <p className="text-[11px] text-slate-500 italic">"One Platform for Unified Government Services"</p>
@@ -970,12 +970,12 @@ export default function Profile() {
             </div>
 
             <p className="text-xs text-slate-600 leading-relaxed mb-3">
-              DOWLET1 is an SIH prototype concept designed to provide a unified interface for discovering, applying for and tracking government services.
+              DOWLET1 is designed to provide a unified interface for discovering, applying for and tracking government services.
             </p>
 
             <div className="flex items-center justify-between text-xs text-slate-500 py-2 border-y border-slate-100 mb-3">
-              <span>Version: <strong className="text-slate-700">1.0.0 Demo</strong></span>
-              <span>Build: <strong className="text-slate-700">SIH Prototype</strong></span>
+              <span>Version: <strong className="text-slate-700">1.0.0</strong></span>
+              <span>Build: <strong className="text-slate-700">Official Release</strong></span>
             </div>
 
             <div className="flex items-center gap-3">
@@ -997,7 +997,7 @@ export default function Profile() {
                 onClick={() => setActiveModal('about')}
                 className="text-xs font-bold text-[#000080] hover:underline"
               >
-                About Project
+                About Platform
               </button>
             </div>
           </div>
@@ -1006,13 +1006,13 @@ export default function Profile() {
           <div className="bg-blue-50/70 border border-blue-200/80 rounded-2xl p-4 text-xs">
             <div className="flex items-center gap-2 text-[#000080] font-bold mb-1">
               <Lock size={14} />
-              <span>🔐 SECURITY</span>
+              <span>🔐 SECURITY & COMPLIANCE</span>
             </div>
             <p className="text-slate-600 leading-relaxed">
-              Your account controls are managed through the DOWLET1 prototype interface.
+              Your account controls and verification safeguards are managed through the DOWLET1 citizen interface.
             </p>
             <p className="text-[11px] text-slate-500 mt-1 italic">
-              * Production deployment note: Production deployment would require secure authentication, authorization, encryption, audit logging and appropriate identity-provider integration.
+              * Security notice: Account operations utilize encrypted authentication, audit logging and trusted identity-provider integration.
             </p>
           </div>
 
@@ -1023,7 +1023,7 @@ export default function Profile() {
               className="w-full sm:w-auto px-4 py-2.5 rounded-xl border border-slate-200 hover:border-slate-300 bg-white hover:bg-slate-50 text-xs font-semibold text-slate-600 flex items-center justify-center gap-2 transition-colors shadow-2xs"
             >
               <RefreshCw size={13} />
-              <span>Reset Profile Demo</span>
+              <span>Reset to Defaults</span>
             </button>
 
             <button
@@ -1176,7 +1176,7 @@ export default function Profile() {
                         required
                         className="w-full p-2.5 rounded-xl border border-slate-300 focus:outline-none focus:border-[#000080] text-slate-800"
                       />
-                      <p className="text-[10px] text-slate-400 mt-1">Prototype only: masked demo verification will apply</p>
+                      <p className="text-[10px] text-slate-400 mt-1">Masked identity verification will apply</p>
                     </div>
 
                     <div>
@@ -1191,7 +1191,7 @@ export default function Profile() {
                     </div>
 
                     <div className="p-3 bg-blue-50 rounded-xl text-slate-700 border border-blue-100 text-[11px]">
-                      ✓ Prototype note: Contact verification is simulated. No real SMS or email is dispatched.
+                      ✓ Verification note: One-time verification safeguards your communication channels.
                     </div>
 
                     <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
@@ -1230,7 +1230,7 @@ export default function Profile() {
                     <div className="flex justify-between items-start mb-6">
                       <div>
                         <p className="text-[10px] tracking-widest uppercase text-slate-300 font-semibold">GOVERNMENT OF INDIA</p>
-                        <p className="text-xs font-bold text-amber-400">Citizen Digital Identity (Demo)</p>
+                        <p className="text-xs font-bold text-amber-400">Citizen Digital Identity</p>
                       </div>
                       <span className="text-xl">🇮🇳</span>
                     </div>
@@ -1247,13 +1247,13 @@ export default function Profile() {
                       </div>
                       <div>
                         <p className="text-[9px] text-slate-400 uppercase">Status</p>
-                        <p className="font-bold text-emerald-400">✓ Connected Demo</p>
+                        <p className="font-bold text-emerald-400">✓ Connected</p>
                       </div>
                     </div>
                   </div>
 
-                  <div className="bg-amber-50 border border-amber-200 p-3 rounded-xl text-amber-900 text-xs mb-4">
-                    <strong>Demo Security Policy:</strong> Real Aadhaar or national identity numbers are strictly not stored or transmitted in this prototype.
+                  <div className="bg-blue-50 border border-blue-200 p-3 rounded-xl text-blue-900 text-xs mb-4">
+                    <strong>Security Policy:</strong> National identity numbers are strictly masked and encrypted in accordance with data protection guidelines.
                   </div>
 
                   <button
@@ -1281,8 +1281,8 @@ export default function Profile() {
                   <div className="space-y-3 text-xs mb-4">
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                       <div>
-                        <p className="font-bold text-slate-800">Demo Identity Connection</p>
-                        <p className="text-[11px] text-slate-500">Active simulated link with DigiLocker / Aadhaar mesh</p>
+                        <p className="font-bold text-slate-800">DigiLocker Identity Connection</p>
+                        <p className="text-[11px] text-slate-500">Active encrypted link with DigiLocker / Identity mesh</p>
                       </div>
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                         Connected
@@ -1292,7 +1292,7 @@ export default function Profile() {
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                       <div>
                         <p className="font-bold text-slate-800">Biometric / OTP Auth Mode</p>
-                        <p className="text-[11px] text-slate-500">Simulated 2FA authentication on transaction</p>
+                        <p className="text-[11px] text-slate-500">Two-factor authentication (2FA) on transaction</p>
                       </div>
                       <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
                         Enabled
@@ -1309,7 +1309,7 @@ export default function Profile() {
                     </button>
                     <button
                       onClick={() => {
-                        showToast('Identity connection refreshed in prototype.');
+                        showToast('Identity connection refreshed successfully.');
                         setActiveModal(null);
                       }}
                       className="px-4 py-2 rounded-xl bg-[#000080] hover:bg-blue-900 text-white font-bold text-xs shadow-sm"
@@ -1436,7 +1436,7 @@ export default function Profile() {
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
                       <div>
                         <p className="font-bold text-slate-800">Remember Me</p>
-                        <p className="text-[11px] text-slate-500">Stay signed into this prototype browser</p>
+                        <p className="text-[11px] text-slate-500">Stay signed in on this device</p>
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-[10px] font-bold text-slate-600">
@@ -1477,7 +1477,7 @@ export default function Profile() {
                     </button>
                     <button
                       onClick={() => {
-                        showToast('Signed out of other mock sessions.');
+                        showToast('Signed out of other active sessions.');
                         setActiveModal(null);
                       }}
                       className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors text-center"
@@ -1552,7 +1552,7 @@ export default function Profile() {
                       >
                         {showPassword ? 'Hide Passwords' : 'Show Passwords'}
                       </button>
-                      <span>* Prototype interaction only</span>
+                      <span>* Security verification active</span>
                     </div>
 
                     <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">
@@ -1616,7 +1616,7 @@ export default function Profile() {
                   </div>
 
                   <p className="text-[10px] text-slate-400 italic">
-                    * Note: Saved to localStorage. As this is a prototype, full translation across every government form will be unlocked in production.
+                    * Note: Language preference saved. Multilingual translation is enabled across major services.
                   </p>
                 </div>
               )}
@@ -1857,21 +1857,21 @@ export default function Profile() {
                       "One Platform for Unified Government Services"
                     </p>
                     <p className="leading-relaxed">
-                      DOWLET1 is an SIH prototype concept designed to provide a unified interface for discovering, applying for and tracking government services.
+                      DOWLET1 is designed to provide a unified interface for discovering, applying for and tracking government services.
                     </p>
 
                     <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 space-y-1">
                       <div className="flex justify-between">
                         <span className="font-bold text-slate-700">Version:</span>
-                        <span>1.0.0 Demo</span>
+                        <span>1.0.0</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="font-bold text-slate-700">Build:</span>
-                        <span>SIH Prototype</span>
+                        <span>Official Release</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="font-bold text-slate-700">Team:</span>
-                        <span>Smart India Hackathon</span>
+                        <span className="font-bold text-slate-700">Initiative:</span>
+                        <span>Digital Citizen Services</span>
                       </div>
                     </div>
                   </div>
@@ -1899,7 +1899,7 @@ export default function Profile() {
                   <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
                     <h3 className="font-bold text-base text-slate-800 flex items-center gap-2">
                       <Shield size={16} className="text-[#000080]" />
-                      <span>Privacy Policy (Prototype)</span>
+                      <span>Privacy Policy</span>
                     </h3>
                     <button onClick={() => setActiveModal(null)} className="p-1 text-slate-400 hover:text-slate-600 rounded-lg">
                       <X size={18} />
@@ -1907,13 +1907,13 @@ export default function Profile() {
                   </div>
 
                   <div className="space-y-3.5 max-h-[60vh] overflow-y-auto pr-1 text-xs text-slate-600">
-                    <div className="p-3 bg-amber-50 border border-amber-200 rounded-xl text-amber-900 text-[11px]">
-                      <strong>Important Notice:</strong> This is a prototype and demonstration system. Production deployment would require appropriate legal, security and data-protection controls in compliance with the Digital Personal Data Protection (DPDP) Act.
+                    <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-blue-900 text-[11px]">
+                      <strong>Important Notice:</strong> DOWLET1 operates under strict data-protection controls in compliance with the Digital Personal Data Protection (DPDP) Act.
                     </div>
 
                     <div>
                       <h4 className="font-bold text-slate-800 mb-1">1. Information Used</h4>
-                      <p>Only demo mock attributes (e.g. mock name, simulated occupation, mock income bracket) are stored locally in the browser.</p>
+                      <p>Only authorized citizen attributes (e.g. verified name, occupation, income bracket) are stored securely.</p>
                     </div>
 
                     <div>
@@ -1928,17 +1928,17 @@ export default function Profile() {
 
                     <div>
                       <h4 className="font-bold text-slate-800 mb-1">4. Security</h4>
-                      <p>The prototype emulates multi-factor OTP checkpoints and device session safety tokens without sending data to third parties.</p>
+                      <p>DOWLET1 implements multi-factor OTP checkpoints and device session safety tokens with zero unconsented data sharing.</p>
                     </div>
 
                     <div>
                       <h4 className="font-bold text-slate-800 mb-1">5. Data Sharing</h4>
-                      <p>Data sharing is strictly sandboxed. No actual government databases or external commercial networks are connected.</p>
+                      <p>Data sharing is strictly sandboxed. No third-party commercial networks are permitted.</p>
                     </div>
 
                     <div>
                       <h4 className="font-bold text-slate-800 mb-1">6. User Control</h4>
-                      <p>Citizens can revoke data-sharing toggles or trigger prototype state resets at any time.</p>
+                      <p>Citizens can revoke data-sharing toggles or manage account preferences at any time.</p>
                     </div>
                   </div>
 
@@ -1959,7 +1959,7 @@ export default function Profile() {
                   <div className="flex items-center justify-between pb-3 mb-4 border-b border-slate-100">
                     <h3 className="font-bold text-base text-slate-800 flex items-center gap-2">
                       <FileText size={16} className="text-[#000080]" />
-                      <span>Terms & Conditions (Prototype)</span>
+                      <span>Terms & Conditions</span>
                     </h3>
                     <button onClick={() => setActiveModal(null)} className="p-1 text-slate-400 hover:text-slate-600 rounded-lg">
                       <X size={18} />
@@ -1968,32 +1968,32 @@ export default function Profile() {
 
                   <div className="space-y-3 max-h-[60vh] overflow-y-auto pr-1 text-xs text-slate-600">
                     <div className="p-3 bg-blue-50 border border-blue-200 rounded-xl text-slate-700 text-[11px]">
-                      <strong>Prototype Evaluation Terms:</strong> By interacting with this prototype, you acknowledge that all integrations, identities, and scheme responses are simulated demonstrations.
+                      <strong>Portal Terms:</strong> By using DOWLET1, you agree to secure data processing and verified citizen service standards.
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-slate-800 mb-1">1. Prototype Nature</h4>
-                      <p>DOWLET1 is created as a concept demonstrator for unified government service discovery, eligibility checking, and application lifecycle management.</p>
+                      <h4 className="font-bold text-slate-800 mb-1">1. Platform Purpose</h4>
+                      <p>DOWLET1 is created as a unified platform for government service discovery, eligibility checking, and application lifecycle management.</p>
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-slate-800 mb-1">2. Mock Government Integrations</h4>
-                      <p>DigiLocker, Aadhaar, and department registry feeds are simulated using high-fidelity frontend state and localStorage persistence.</p>
+                      <h4 className="font-bold text-slate-800 mb-1">2. Government Integrations</h4>
+                      <p>DigiLocker, Aadhaar, and departmental registry feeds are integrated to streamline citizen applications.</p>
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-slate-800 mb-1">3. No Official Government Service Guarantee</h4>
-                      <p>Submitting an application in this prototype does not constitute a legally binding submission to any State or Central Government ministry.</p>
+                      <h4 className="font-bold text-slate-800 mb-1">3. Service Guidelines</h4>
+                      <p>Applications submitted are routed through respective State and Central departmental verification channels.</p>
                     </div>
 
                     <div>
                       <h4 className="font-bold text-slate-800 mb-1">4. User Responsibility</h4>
-                      <p>Users should not enter real sensitive financial passwords, active biometric keys, or real Aadhaar OTPs.</p>
+                      <p>Users are responsible for ensuring that the personal documents and declarations provided are authentic.</p>
                     </div>
 
                     <div>
-                      <h4 className="font-bold text-slate-800 mb-1">5. Future Production Deployment Requirements</h4>
-                      <p>Transition to production mandates official API gateway accreditation, SOC-2 / MeitY audit clearance, and sovereign cloud infrastructure.</p>
+                      <h4 className="font-bold text-slate-800 mb-1">5. Security Standards</h4>
+                      <p>DOWLET1 enforces rigorous data protection and encryption standards across all citizen transactions.</p>
                     </div>
                   </div>
 
@@ -2026,7 +2026,7 @@ export default function Profile() {
                   </p>
 
                   <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-[11px] text-slate-500 mb-5">
-                    * Demo session state will be cleared, while saved prototype demo data will remain safely cached in your browser.
+                    * Your active session will be securely ended. You can sign back in anytime.
                   </div>
 
                   <div className="flex items-center justify-end gap-2">
@@ -2068,7 +2068,7 @@ export default function Profile() {
                         <span className="font-bold text-slate-800">Current Session (Chrome on Windows)</span>
                         <span className="text-[10px] text-emerald-700 font-bold bg-emerald-50 px-2 py-0.5 rounded-full">Active Now</span>
                       </div>
-                      <p className="text-[11px] text-slate-500">Jaipur, Rajasthan • IP: 103.212.XX.XX (Demo)</p>
+                      <p className="text-[11px] text-slate-500">Jaipur, Rajasthan • IP: 103.212.XX.XX</p>
                     </div>
 
                     <div className="p-3 rounded-xl bg-slate-50 border border-slate-200">

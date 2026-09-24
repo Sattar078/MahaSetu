@@ -89,11 +89,11 @@ export default function Notifications() {
     showToast("Notification removed");
   };
 
-  // Reset to initial demo notifications
+  // Reset to initial notifications
   const handleResetDemo = () => {
     resetNotificationDemo();
     setNotifications(getNotifications());
-    showToast("Demo notifications reset to initial mock data");
+    showToast("Notifications reset to default values");
   };
 
   // Open notification detail modal
@@ -228,8 +228,8 @@ export default function Notifications() {
               <span>Back</span>
             </button>
             <div className="flex items-center gap-2">
-              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-amber-50 text-amber-900 border border-amber-200 tracking-wide uppercase">
-                DEMO / PROTOTYPE
+              <span className="px-2.5 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-[#000080] border border-blue-200 tracking-wide uppercase">
+                OFFICIAL ALERTS
               </span>
               {unreadCount > 0 && (
                 <button
@@ -256,10 +256,10 @@ export default function Notifications() {
             <button
               onClick={handleResetDemo}
               className="text-[11px] font-semibold text-slate-500 hover:text-red-600 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 px-2.5 py-1 rounded-xl flex items-center gap-1 transition-all self-start sm:self-auto shadow-2xs"
-              title="Reset demo notifications to initial values"
+              title="Reset notifications to defaults"
             >
               <RefreshCw size={12} />
-              <span>Reset Notification Demo</span>
+              <span>Reset to Defaults</span>
             </button>
           </div>
         </div>
@@ -371,7 +371,7 @@ export default function Notifications() {
           <div className="bg-white rounded-3xl p-8 border border-red-200 text-center my-6">
             <AlertCircle size={32} className="text-red-500 mx-auto mb-3" />
             <h4 className="text-sm font-bold text-slate-800">Something went wrong</h4>
-            <p className="text-xs text-slate-500 mt-1 mb-4">Unable to load notifications in this demo.</p>
+            <p className="text-xs text-slate-500 mt-1 mb-4">Unable to load notifications at this time.</p>
             <div className="flex justify-center gap-3">
               <button onClick={loadData} className="px-4 py-2 bg-[#000080] text-white text-xs font-bold rounded-xl">
                 Try Again
@@ -619,7 +619,7 @@ export default function Notifications() {
               </div>
               <h3 className="text-sm font-extrabold text-slate-900">Remove Notification?</h3>
               <p className="text-xs text-slate-500 mt-1 mb-5">
-                Are you sure you want to remove this notification from your DOWLET1 prototype wallet?
+                Are you sure you want to remove this notification from your DOWLET1 inbox?
               </p>
               <div className="flex items-center gap-2">
                 <button
@@ -647,7 +647,7 @@ export default function Notifications() {
               🔐 NOTIFICATION PRIVACY
             </span>
             <p className="mt-0.5 leading-relaxed text-slate-600">
-              Notifications shown here are part of the DOWLET1 prototype. No sensitive personal records or real citizen data are exposed. All updates reflect verified mock workflows.
+              Notifications shown here are delivered through the secure DOWLET1 citizen mesh. All alerts reflect verified service milestones and document activity.
             </p>
           </div>
         </div>

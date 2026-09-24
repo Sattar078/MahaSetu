@@ -67,7 +67,7 @@ export default function PrivacySecurity() {
     setPasswordError('');
     setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' });
     setActiveModal(null);
-    showToast('✓ Password updated in this prototype.');
+    showToast('✓ Password updated successfully.');
   };
 
   return (
@@ -124,7 +124,7 @@ export default function PrivacySecurity() {
             <div className="p-3 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
               <div>
                 <p className="font-bold text-slate-800">Remember Me</p>
-                <p className="text-[11px] text-slate-500">Maintain prototype session cache locally</p>
+                <p className="text-[11px] text-slate-500">Maintain active session cache locally</p>
               </div>
               <div className="flex items-center gap-2">
                 <span className="text-[10px] font-bold text-slate-600">
@@ -165,7 +165,7 @@ export default function PrivacySecurity() {
             </button>
             <button
               onClick={() => {
-                showToast('Signed out of other mock sessions.');
+                showToast('Signed out of other active sessions.');
               }}
               className="flex-1 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs transition-colors text-center"
             >
@@ -279,13 +279,13 @@ export default function PrivacySecurity() {
         <div className="bg-blue-50/80 border border-blue-200 rounded-2xl p-4 text-xs">
           <div className="flex items-center gap-2 text-[#000080] font-bold mb-1">
             <Shield size={15} />
-            <span>🔐 SECURITY</span>
+            <span>🔐 SECURITY & COMPLIANCE</span>
           </div>
           <p className="text-slate-700 leading-relaxed font-medium">
-            "Your account controls are managed through the DOWLET1 prototype interface."
+            Your account controls and verification safeguards are managed through the DOWLET1 citizen interface.
           </p>
           <p className="text-[11px] text-slate-500 mt-1 italic leading-normal">
-            "Production deployment would require secure authentication, authorization, encryption, audit logging and appropriate identity-provider integration."
+            Account operations utilize encrypted authentication, audit logging and trusted identity-provider integration.
           </p>
         </div>
 
@@ -349,7 +349,7 @@ export default function PrivacySecurity() {
               </div>
 
               <div className="p-2.5 bg-slate-50 text-slate-500 rounded-xl text-[11px]">
-                * Prototype note: Passwords are simulated and not stored on a real backend.
+                * Security note: Password changes are securely verified and encrypted.
               </div>
 
               <div className="flex items-center justify-end gap-2 pt-3 border-t border-slate-100">

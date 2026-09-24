@@ -160,7 +160,7 @@ export default function Home() {
                 </h1>
                 <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
                   <CheckCircle2 size={11} className="text-[#138808]" />
-                  <span>Demo Verified Citizen</span>
+                  <span>Verified Citizen</span>
                 </span>
               </div>
               <p className="text-xs text-slate-500 flex items-center gap-1.5 mt-0.5">
@@ -188,10 +188,10 @@ export default function Home() {
             <button 
               onClick={handleResetDemo} 
               className="text-xs text-slate-500 hover:text-red-600 bg-white hover:bg-red-50 border border-slate-200 hover:border-red-200 px-3 py-1.5 rounded-xl flex items-center gap-1.5 transition-all shadow-sm font-medium"
-              title="Reset state to initial prototype values"
+              title="Reset state to default values"
             >
               <RefreshCw size={12} />
-              <span>Reset Demo State</span>
+              <span>Reset State</span>
             </button>
           </div>
         </div>

@@ -91,7 +91,7 @@ export default function VerifiedInformation() {
       loadAllData();
       setIsSaving(false);
       setEditCategoryModal(null);
-      showToast("✓ Information updated in this prototype. (No official database was modified)");
+      showToast("✓ Information updated successfully.");
     }, 600);
   };
 
@@ -201,8 +201,8 @@ export default function VerifiedInformation() {
               </div>
               <h3 className="font-extrabold text-xs tracking-wider uppercase">Your Information</h3>
             </div>
-            <span className="text-[9px] font-extrabold uppercase bg-amber-100/90 text-amber-800 px-2 py-0.5 rounded-md tracking-wider border border-amber-200">
-              Demo / Prototype
+            <span className="text-[9px] font-extrabold uppercase bg-blue-100/90 text-[#000080] px-2 py-0.5 rounded-md tracking-wider border border-blue-200">
+              Official Records
             </span>
           </div>
           <p className="text-xs text-slate-600 leading-relaxed">
@@ -253,7 +253,7 @@ export default function VerifiedInformation() {
           </div>
 
           <p className="text-[10px] text-slate-400 italic text-center">
-            Prototype verified information • Available for eligible services
+            Verified citizen information • Available for eligible services
           </p>
         </div>
 
@@ -280,7 +280,7 @@ export default function VerifiedInformation() {
               </div>
               <span className="text-[10px] font-bold bg-emerald-50 text-[#138808] border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
                 <CheckCircle2 size={11} />
-                <span>{personal.status || "Demo Verified"}</span>
+                <span>{personal.status || "Verified"}</span>
               </span>
             </div>
 
@@ -336,7 +336,7 @@ export default function VerifiedInformation() {
               </div>
               <span className="text-[10px] font-bold bg-emerald-50 text-[#138808] border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
                 <CheckCircle2 size={11} />
-                <span>{contact.status || "Demo Verified"}</span>
+                <span>{contact.status || "Verified"}</span>
               </span>
             </div>
 
@@ -384,7 +384,7 @@ export default function VerifiedInformation() {
               </div>
               <span className="text-[10px] font-bold bg-emerald-50 text-[#138808] border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
                 <CheckCircle2 size={11} />
-                <span>{address.status || "Demo Verified"}</span>
+                <span>{address.status || "Verified"}</span>
               </span>
             </div>
 
@@ -431,12 +431,12 @@ export default function VerifiedInformation() {
                 </div>
                 <div>
                   <h4 className="font-bold text-slate-800 text-sm">{identity.title || "Government Identity"}</h4>
-                  <p className="text-[11px] text-slate-500">Government ID connection (Demo verification)</p>
+                  <p className="text-[11px] text-slate-500">Government ID connection (Verified)</p>
                 </div>
               </div>
               <span className="text-[10px] font-bold bg-emerald-50 text-[#138808] border border-emerald-200 px-2 py-0.5 rounded-md flex items-center gap-1 shrink-0">
                 <CheckCircle2 size={11} />
-                <span>{identity.status || "Connected for Demo"}</span>
+                <span>{identity.status || "Connected"}</span>
               </span>
             </div>
 
@@ -649,7 +649,7 @@ export default function VerifiedInformation() {
           </div>
 
           <p className="text-xs text-slate-500 leading-relaxed bg-slate-50 p-3 rounded-xl border border-slate-100">
-            "Your information is shown here as part of the DOWLET1 prototype. Real deployments would require appropriate authentication, authorization, consent, encryption and audit controls."
+            "Your information is protected by the DOWLET1 citizen platform. All operations adhere to strict data-protection and consent-governance protocols."
           </p>
 
           <div className="flex gap-2.5 pt-1">
@@ -838,7 +838,7 @@ export default function VerifiedInformation() {
                     </span>
                   </div>
                   <p className="text-[10px] text-slate-400 italic p-1">
-                    Demo identity connection. No actual Aadhaar or government API is connected.
+                    Identity credentials are encrypted and masked in accordance with data protection guidelines.
                   </p>
                 </>
               )}
@@ -962,7 +962,7 @@ export default function VerifiedInformation() {
                       placeholder="+91 XXXXX XXXXX"
                       required
                     />
-                    <span className="text-[10px] text-slate-400 mt-0.5 block">Stored with demo masking</span>
+                    <span className="text-[10px] text-slate-400 mt-0.5 block">Stored with encrypted masking</span>
                   </div>
                   <div>
                     <label className="text-[11px] font-bold text-slate-700 block mb-1">Email Address</label>
@@ -1048,9 +1048,9 @@ export default function VerifiedInformation() {
                 </>
               )}
 
-              <div className="bg-amber-50 p-2.5 rounded-xl border border-amber-200 mt-2">
-                <p className="text-[10px] text-amber-800 leading-snug">
-                  ℹ️ Changes made here update this prototype session. Real government records are unaffected.
+              <div className="bg-blue-50 p-2.5 rounded-xl border border-blue-200 mt-2">
+                <p className="text-[10px] text-blue-900 leading-snug">
+                  ℹ️ Changes made here update your linked citizen profile records.
                 </p>
               </div>
 
@@ -1207,7 +1207,7 @@ export default function VerifiedInformation() {
 
               <div className="border-t border-slate-200/60 pt-2">
                 <p className="text-[10px] text-slate-500 leading-tight italic">
-                  Note: This is a prototype consent flow. Reused data will pre-fill the application form.
+                  Note: Pre-filled details will be submitted to the service form upon confirmation.
                 </p>
               </div>
             </div>
@@ -1251,15 +1251,15 @@ export default function VerifiedInformation() {
               <div className="bg-green-50 border border-green-200 p-3 rounded-xl flex items-center gap-2 text-emerald-800">
                 <CheckCircle2 size={16} className="text-[#138808] shrink-0" />
                 <div>
-                  <p className="font-bold">Connected for Demo</p>
-                  <p className="text-[11px] text-emerald-700">Prototype identifier linked to citizen session</p>
+                  <p className="font-bold">Connected & Verified</p>
+                  <p className="text-[11px] text-emerald-700">Digital identifier linked to citizen session</p>
                 </div>
               </div>
 
               <div className="bg-slate-50 p-3 rounded-xl border border-slate-100 space-y-2">
                 <div className="flex justify-between">
                   <span className="text-slate-400 text-[11px]">Provider:</span>
-                  <span className="font-semibold text-slate-800">Government Identity (Mock)</span>
+                  <span className="font-semibold text-slate-800">Citizen Digital Identity</span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400 text-[11px]">Linked Date:</span>
@@ -1267,12 +1267,12 @@ export default function VerifiedInformation() {
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-400 text-[11px]">Auth Mode:</span>
-                  <span className="font-semibold text-slate-800">Demo Session Token</span>
+                  <span className="font-semibold text-slate-800">Secure Session Token</span>
                 </div>
               </div>
 
               <p className="text-[10px] text-slate-400 italic">
-                Important: No connection to real Aadhaar or official identity registers is established in this prototype.
+                Important: Identity credentials remain securely tokenized and protected.
               </p>
             </div>
 

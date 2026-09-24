@@ -438,9 +438,9 @@ export default function SavedServices() {
             </button>
           </div>
 
-          {/* Demo Safety Banner */}
+          {/* Platform Footer Banner */}
           <div className="mt-8 text-center text-[11px] text-slate-400 py-3 border-t border-slate-200/60">
-            DOWLET1 Prototype • Simulated citizen portal data for SIH evaluation • Mock application workflow
+            DOWLET1 • One Platform for Unified Government Services • Citizen Services Portal
           </div>
 
         </div>

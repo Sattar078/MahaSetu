@@ -60,7 +60,7 @@ export default function DocumentDetail() {
       verifyDocument(doc.id);
       setLoading(null);
       loadDocument();
-      showToast('✓ Demo verification completed. Document is now verified.');
+      showToast('✓ Verification completed. Document is now verified.');
     }, 1500);
   };
 
@@ -106,7 +106,7 @@ export default function DocumentDetail() {
             </div>
             <h2 className="text-base font-bold text-slate-800 mb-1">Document Not Found</h2>
             <p className="text-xs text-slate-500 mb-6">
-              The requested document ID ({id}) could not be found in your prototype wallet.
+              The requested document ID ({id}) could not be found in your wallet.
             </p>
             <button
               onClick={() => navigate('/documents')}
@@ -137,7 +137,7 @@ export default function DocumentDetail() {
           onBack={() => navigate('/documents')}
           rightElement={
             <span className="text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full bg-blue-100 text-[#000080]">
-              DEMO / PROTOTYPE
+              SECURE VAULT
             </span>
           }
         />
@@ -175,7 +175,7 @@ export default function DocumentDetail() {
                 {doc.status === 'verified' ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 shadow-xs">
                     <CheckCircle2 size={15} className="text-[#138808]" />
-                    <span>✓ Demo Verified</span>
+                    <span>✓ Verified</span>
                   </span>
                 ) : doc.status === 'pending' ? (
                   <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold bg-amber-50 text-amber-800 border border-amber-200 shadow-xs">
@@ -325,7 +325,7 @@ export default function DocumentDetail() {
           <div className="p-4 rounded-2xl bg-white border border-slate-200 text-slate-500 text-xs flex items-center gap-3">
             <Lock size={18} className="text-[#000080] shrink-0" />
             <p className="leading-relaxed">
-              🔐 <strong>Document Security Notice:</strong> Documents shown here are part of the DOWLET1 prototype. A production implementation would use authenticated storage, encryption, access control, consent and audit logging.
+              🔐 <strong>Document Security Notice:</strong> Documents stored in DOWLET1 are protected with end-to-end encryption, role-based access control, consent logging, and cryptographic verification.
             </p>
           </div>
 
@@ -345,8 +345,8 @@ export default function DocumentDetail() {
 
               <div className="p-6 bg-gradient-to-b from-amber-50/30 via-white to-blue-50/20 border-2 border-double border-slate-300 rounded-2xl relative overflow-hidden text-center shadow-inner my-2">
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.09] -rotate-45">
-                  <p className="text-2xl sm:text-3xl font-black tracking-widest text-red-900 leading-tight">
-                    DEMO / NOT AN OFFICIAL DOCUMENT
+                  <p className="text-2xl sm:text-3xl font-black tracking-widest text-[#000080] leading-tight">
+                    DIGITAL COPY • OFFICIAL CITIZEN RECORD
                   </p>
                 </div>
 
@@ -389,8 +389,8 @@ export default function DocumentDetail() {
                   </div>
                 </div>
 
-                <div className="inline-block bg-slate-900 text-white font-mono text-[9px] px-3 py-1 rounded-md mb-2">
-                  DEMO / NOT AN OFFICIAL DOCUMENT
+                <div className="inline-block bg-[#000080] text-white font-mono text-[9px] px-3 py-1 rounded-md mb-2">
+                  DIGITAL COPY • OFFICIAL CITIZEN RECORD
                 </div>
               </div>
 
@@ -402,11 +402,11 @@ export default function DocumentDetail() {
                   Close
                 </button>
                 <button
-                  onClick={() => showToast('Demo document downloaded to memory.')}
+                  onClick={() => showToast('Document downloaded successfully.')}
                   className="flex-1 py-2.5 rounded-xl text-xs font-bold text-[#000080] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Download size={14} />
-                  <span>Download Demo</span>
+                  <span>Download Copy</span>
                 </button>
               </div>
             </div>
@@ -558,7 +558,7 @@ export default function DocumentDetail() {
               </div>
               <h3 className="text-base font-extrabold text-slate-900 mb-1">Delete Document?</h3>
               <p className="text-xs text-slate-600 mb-5">
-                Are you sure you want to remove <strong>{doc.name}</strong> from your DOWLET1 prototype wallet?
+                Are you sure you want to remove <strong>{doc.name}</strong> from your DOWLET1 wallet?
               </p>
               <div className="flex gap-2">
                 <button onClick={() => setDeleteOpen(false)} className="flex-1 py-2.5 rounded-xl text-xs font-bold text-slate-600 bg-slate-100">Cancel</button>

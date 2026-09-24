@@ -7,8 +7,8 @@ import { setCurrentRole } from '../../../utils/demoState';
 export default function AdminLogin() {
   const navigate = useNavigate();
 
-  const [adminEmail, setAdminEmail] = useState('admin.sih@nic.gov.in');
-  const [passkey, setPasskey] = useState('ADMIN-SIH-2025');
+  const [adminEmail, setAdminEmail] = useState('admin.ops@nic.gov.in');
+  const [passkey, setPasskey] = useState('ADMIN-GOV-2025');
   const [error, setError] = useState('');
 
   const handleLogin = (e) => {
@@ -29,15 +29,15 @@ export default function AdminLogin() {
   };
 
   const handleAutoFill = () => {
-    setAdminEmail('admin.sih@nic.gov.in');
-    setPasskey('ADMIN-SIH-2025');
+    setAdminEmail('admin.ops@nic.gov.in');
+    setPasskey('ADMIN-GOV-2025');
     setError('');
   };
 
   return (
     <AuthResponsiveContainer
       title="System Administrator Access"
-      subtitle="National citizen mesh telemetry, audit inspection, and SIH jury evaluation console."
+      subtitle="National citizen mesh telemetry, audit inspection, and system operations console."
       showBackButton={true}
       onBack={() => navigate('/role-select')}
       maxWidth="max-w-md"
@@ -46,7 +46,7 @@ export default function AdminLogin() {
       <div className="mb-4 bg-emerald-500/15 border border-emerald-500/30 rounded-2xl p-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-emerald-300 shrink-0" />
-          <p className="text-[11px] text-emerald-200 font-medium">Demo Admin Passkey ready</p>
+          <p className="text-[11px] text-emerald-200 font-medium">Admin Security Passkey ready</p>
         </div>
         <button
           type="button"

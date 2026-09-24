@@ -47,7 +47,7 @@ export default function AIReview() {
     navigate('/ai/workflow', { state: { formData } });
   };
 
-  if (!service) return <div className="p-5">Service not found for demo.</div>;
+  if (!service) return <div className="p-5">Service not found.</div>;
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-slate-50 pb-20">

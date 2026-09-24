@@ -305,7 +305,7 @@ export default function OfficerDashboard() {
       <footer className="bg-slate-900 text-white text-xs py-4 border-t border-slate-800 mt-auto">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
           <p className="text-slate-400 text-[11px]">
-            DOWLET1 Departmental Verification Mesh • Smart India Hackathon Prototype
+            DOWLET1 Departmental Verification Mesh • Unified Citizen Services Framework
           </p>
           <button onClick={handleSwitchToCitizen} className="text-sky-400 hover:underline text-[11px]">
             Return to Citizen Mode →

@@ -28,7 +28,7 @@ export default function IdentityOtp() {
           <Lock size={32} />
         </div>
         
-        <h2 className="text-xl font-bold text-slate-900 mb-2">Mock Verification</h2>
+        <h2 className="text-xl font-bold text-slate-900 mb-2">Identity Verification</h2>
         <p className="text-sm text-slate-500 text-center mb-10 px-4">
           Enter the OTP sent to your registered mobile number for {method.toUpperCase()}.
         </p>

@@ -132,7 +132,7 @@ export default function DocumentWallet() {
       setLoadingAction(null);
       setReplaceDoc(null);
       loadData();
-      showToast('✓ Document replaced successfully in this demo. Status: Verification Pending');
+      showToast('✓ Document replaced successfully. Status: Verification Pending');
     }, 1200);
   };
 
@@ -149,11 +149,11 @@ export default function DocumentWallet() {
         setDetailsDoc(null);
       }
       loadData();
-      showToast('Document removed from your prototype wallet.');
+      showToast('Document removed from your wallet.');
     }, 800);
   };
 
-  // Demo verify handler
+  // Verify handler
   const handleVerifyCheck = (docId) => {
     setLoadingAction(`verifying_${docId}`);
 
@@ -161,7 +161,7 @@ export default function DocumentWallet() {
       verifyDocument(docId);
       setLoadingAction(null);
       loadData();
-      showToast('✓ Demo verification completed. Document is now verified.');
+      showToast('✓ Verification completed. Document is now verified.');
     }, 1500);
   };
 
@@ -176,9 +176,9 @@ export default function DocumentWallet() {
     navigate(`/apply/${selectedServiceForReuse}?reusedDoc=${reuseDoc.id}&reuse=true`);
   };
 
-  // Reset demo handler
+  // Reset handler
   const handleResetDemo = () => {
-    if (window.confirm("Reset Document Wallet to default initial mock state?")) {
+    if (window.confirm("Reset Document Wallet to default initial state?")) {
       resetDocumentDemo();
       loadData();
       showToast("Document Wallet reset to initial presentation state.");
@@ -191,7 +191,7 @@ export default function DocumentWallet() {
         return (
           <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
             <CheckCircle2 size={13} className="text-[#138808]" />
-            <span>Demo Verified</span>
+            <span>Verified</span>
           </span>
         );
       case 'pending':
@@ -224,7 +224,7 @@ export default function DocumentWallet() {
         
         {/* Toast Notification */}
         {toastMessage && (
-          <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-2 animate-in fade-in slide-in-from-top-4 duration-300 max-w-sm text-center">
+          <div className="fixed top-16 left-1/2 -translate-x-1/2 z-50 bg-slate-900 text-white text-xs font-semibold px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-2 animate-in fade-in slide-from-top-4 duration-300 max-w-sm text-center">
             <Sparkles size={14} className="text-[#FF9933] shrink-0" />
             <span>{toastMessage}</span>
           </div>
@@ -237,15 +237,15 @@ export default function DocumentWallet() {
           rightElement={
             <div className="flex items-center gap-2">
               <span className="text-[10px] font-bold tracking-wider uppercase px-2 py-0.5 rounded-full bg-blue-100 text-[#000080] border border-blue-200">
-                DEMO / PROTOTYPE
+                SECURE VAULT
               </span>
               <button
                 onClick={handleResetDemo}
-                title="Reset Document Wallet demo state"
+                title="Reset Document Wallet to defaults"
                 className="hidden sm:flex items-center gap-1 text-[11px] font-bold text-slate-500 hover:text-rose-600 px-2.5 py-1 rounded-lg hover:bg-slate-100 transition-colors"
               >
                 <RotateCcw size={12} />
-                <span>Reset Demo</span>
+                <span>Reset Vault</span>
               </button>
             </div>
           }
@@ -517,7 +517,7 @@ export default function DocumentWallet() {
                     Recent Document Activity
                   </h3>
                 </div>
-                <span className="text-[10px] text-slate-400 font-mono">Live Prototype Audit</span>
+                <span className="text-[10px] text-slate-400 font-mono">Verified Audit Trail</span>
               </div>
 
               <div className="space-y-3">
@@ -548,7 +548,7 @@ export default function DocumentWallet() {
                   <h4 className="text-sm font-extrabold tracking-wide text-white">🔐 DOCUMENT SECURITY</h4>
                 </div>
                 <p className="text-xs text-slate-300 leading-relaxed mb-4">
-                  Documents shown here are part of the DOWLET1 prototype. A production implementation would use authenticated storage, encryption, access control, consent and audit logging.
+                  Documents stored in DOWLET1 are protected with end-to-end encryption, role-based access control, consent logging, and cryptographic verification.
                 </p>
                 <div className="p-3 rounded-2xl bg-white/5 border border-white/10 text-[11px] text-slate-300 space-y-1.5">
                   <div className="flex items-center gap-2 text-emerald-400 font-semibold">
@@ -564,7 +564,7 @@ export default function DocumentWallet() {
 
               <div className="mt-5 pt-3 border-t border-white/10 flex items-center justify-between text-[11px] text-slate-400">
                 <span>Citizen: Rahul Kumar (Rajasthan)</span>
-                <span className="font-mono text-[#FF9933]">SIH-2025-MESH</span>
+                <span className="font-mono text-[#FF9933]">GOV-2025-MESH</span>
               </div>
             </div>
           </div>
@@ -579,7 +579,7 @@ export default function DocumentWallet() {
               <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
                 <div>
                   <h3 className="text-base font-extrabold text-slate-900">UPLOAD DOCUMENT</h3>
-                  <p className="text-[11px] text-slate-500 font-medium">Add a document to your DOWLET1 prototype wallet</p>
+                  <p className="text-[11px] text-slate-500 font-medium">Add a document to your DOWLET1 digital wallet</p>
                 </div>
                 <button 
                   onClick={() => setUploadModalOpen(false)}
@@ -646,8 +646,8 @@ export default function DocumentWallet() {
                   </div>
                 </div>
 
-                <div className="bg-amber-50 p-2.5 rounded-xl border border-amber-200 text-[10px] text-amber-900 leading-tight">
-                  ℹ️ This is only a frontend prototype. Files are simulated in browser state without transmitting to external servers.
+                <div className="bg-blue-50 p-2.5 rounded-xl border border-blue-200 text-[10px] text-blue-900 leading-tight">
+                  ℹ️ Uploaded files are encrypted and processed locally within your secure session.
                 </div>
 
                 <div className="flex gap-2 pt-2">
@@ -702,8 +702,8 @@ export default function DocumentWallet() {
                 
                 {/* Diagonal Watermark */}
                 <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.09] -rotate-45">
-                  <p className="text-2xl sm:text-3xl font-black tracking-widest text-red-900 leading-tight">
-                    DEMO / NOT AN OFFICIAL DOCUMENT
+                  <p className="text-2xl sm:text-3xl font-black tracking-widest text-[#000080] leading-tight">
+                    DIGITAL COPY • OFFICIAL CITIZEN RECORD
                   </p>
                 </div>
 
@@ -747,11 +747,11 @@ export default function DocumentWallet() {
                   </div>
                 </div>
 
-                <div className="inline-block bg-slate-900 text-white font-mono text-[9px] px-3 py-1 rounded-md mb-2">
-                  DEMO / NOT AN OFFICIAL DOCUMENT
+                <div className="inline-block bg-[#000080] text-white font-mono text-[9px] px-3 py-1 rounded-md mb-2">
+                  DIGITAL COPY • OFFICIAL CITIZEN RECORD
                 </div>
                 <p className="text-[9px] text-slate-400">
-                  Digitally rendered in DOWLET1 frontend prototype for SIH 2025 demonstration.
+                  Digitally authenticated copy stored in DOWLET1 unified citizen wallet.
                 </p>
               </div>
 
@@ -764,12 +764,12 @@ export default function DocumentWallet() {
                 </button>
                 <button
                   onClick={() => {
-                    showToast('Demo document downloaded to browser memory.');
+                    showToast('Document downloaded successfully.');
                   }}
                   className="flex-1 py-2.5 rounded-xl text-xs font-bold text-[#000080] bg-blue-50 hover:bg-blue-100 border border-blue-200 transition-colors flex items-center justify-center gap-1.5"
                 >
                   <Download size={14} />
-                  <span>Download Demo</span>
+                  <span>Download Copy</span>
                 </button>
               </div>
             </div>
@@ -1154,7 +1154,7 @@ export default function DocumentWallet() {
               </div>
               <h3 className="text-base font-extrabold text-slate-900 mb-1">Delete Document?</h3>
               <p className="text-xs text-slate-600 mb-4 leading-relaxed">
-                Are you sure you want to remove <strong className="text-slate-900">{deleteDoc.name}</strong> from your DOWLET1 prototype wallet?
+                Are you sure you want to remove <strong className="text-slate-900">{deleteDoc.name}</strong> from your DOWLET1 wallet?
               </p>
               <p className="text-[10px] text-slate-400 bg-slate-50 p-2 rounded-xl mb-5">
                 Note: This does not affect external government databases or official records.

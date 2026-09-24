@@ -50,7 +50,7 @@ export default function OfficerLogin() {
       <div className="mb-4 bg-sky-500/15 border border-sky-500/30 rounded-2xl p-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-2">
           <Sparkles size={16} className="text-sky-300 shrink-0" />
-          <p className="text-[11px] text-sky-200 font-medium">Demo Official Credentials ready</p>
+          <p className="text-[11px] text-sky-200 font-medium">Official Credentials ready</p>
         </div>
         <button
           type="button"

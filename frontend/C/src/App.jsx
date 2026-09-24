@@ -114,7 +114,7 @@ function App() {
         <Route path="/discover" element={<NeedDiscovery />} />
         <Route path="/search" element={<SearchResults />} />
         
-        {/* ── AI Assistant Prototype ── */}
+        {/* ── AI Assistant ── */}
         <Route path="/ai" element={<AIAssistant />} />
         <Route path="/ai/review" element={<AIReview />} />
         <Route path="/ai/workflow" element={<AIWorkflow />} />

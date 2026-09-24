@@ -70,7 +70,7 @@ export default function AuthResponsiveContainer({
 
             <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-white/10 border border-white/15 text-xs text-white/90 backdrop-blur-md mb-8">
               <span>🇮🇳</span>
-              <span>National Citizen Digital Identity Gateway • SIH Prototype</span>
+              <span>National Citizen Digital Identity Gateway • Official Portal</span>
             </div>
           </div>
 

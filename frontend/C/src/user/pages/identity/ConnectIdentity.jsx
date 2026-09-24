@@ -7,7 +7,7 @@ export default function ConnectIdentity() {
   const navigate = useNavigate();
   
   const methods = [
-    { id: 'aadhaar', name: 'Aadhaar (Prototype)', icon: Fingerprint, color: 'text-blue-500', bg: 'bg-blue-50' },
+    { id: 'aadhaar', name: 'Aadhaar Card', icon: Fingerprint, color: 'text-blue-500', bg: 'bg-blue-50' },
     { id: 'digilocker', name: 'DigiLocker', icon: FileBadge, color: 'text-amber-500', bg: 'bg-amber-50' },
     { id: 'eauth', name: 'e-Authentication', icon: LockKeyhole, color: 'text-emerald-500', bg: 'bg-emerald-50' },
   ];

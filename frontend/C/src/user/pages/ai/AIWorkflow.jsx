@@ -55,14 +55,14 @@ export default function AIWorkflow() {
         <div className="flex flex-col flex-1 items-center justify-center p-6 text-center">
           <div className="w-20 h-20 bg-white rounded-2xl shadow-sm border border-slate-100 flex items-center justify-center mb-8 relative">
             <Network size={32} className="text-[#000080]" />
-            <div className="absolute -top-2 -right-2 bg-[#FF9933] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm">
-              MOCK
+            <div className="absolute -top-2 -right-2 bg-[#138808] text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow-sm">
+              ACTIVE
             </div>
           </div>
           
           <h2 className="font-bold text-slate-800 text-lg mb-2">Workflow Engine</h2>
           <p className="text-xs text-slate-500 font-medium bg-slate-200 px-3 py-1 rounded-full mb-8">
-            DEMO / MOCK ENVIRONMENT
+            TRANSACTION GATEWAY
           </p>
 
           <div className="w-full max-w-sm space-y-4 text-left bg-white p-5 rounded-2xl shadow-sm border border-slate-100">
@@ -100,7 +100,7 @@ export default function AIWorkflow() {
               <span className="my-1">↓</span>
               <span>API Gateway</span>
               <span className="my-1">↓</span>
-              <span className="text-[#FF9933]">{formData.department} API (Mock)</span>
+              <span className="text-[#FF9933]">{formData.department} Service Gateway</span>
             </div>
           </div>
         </div>

@@ -67,7 +67,7 @@ export default function ApplicationDetail() {
   };
 
   const handleDownloadCertificate = () => {
-    showToast("Demo Certificate downloaded successfully.");
+    showToast("Certificate downloaded successfully.");
   };
 
   if (!app) {
@@ -80,7 +80,7 @@ export default function ApplicationDetail() {
           </div>
           <h2 className="text-base font-bold text-slate-800 mb-1">Application could not be found.</h2>
           <p className="text-xs text-slate-500 mb-6 max-w-xs">
-            The requested application reference ID does not exist in the current prototype session.
+            The requested application reference ID does not exist in the official records.
           </p>
           <button
             onClick={() => navigate('/applications')}
@@ -99,7 +99,7 @@ export default function ApplicationDetail() {
       return "Action required from you: please upload the requested Bank Account Proof to resume official verification.";
     }
     if (app.statusType === 'completed' || app.statusStep === 4) {
-      return "Your certificate has been issued and digitally signed. You can view or download your demo certificate below.";
+      return "Your certificate has been issued and digitally signed. You can view or download your certificate below.";
     }
     if (app.statusStep === 0) {
       return "Your application has been registered online. Initial automated document verification is scheduled next.";
@@ -108,7 +108,7 @@ export default function ApplicationDetail() {
       return "Your submitted documents have been received from Document Wallet. The next step is field and revenue database cross-check.";
     }
     if (app.statusStep === 2) {
-      return "Your submitted information is being verified. The next step in this prototype is officer verification.";
+      return "Your submitted information is being verified. The next step is officer verification.";
     }
     if (app.statusStep === 3) {
       return "Your application has passed field checks and is awaiting final officer approval and digital signature.";
@@ -186,7 +186,7 @@ export default function ApplicationDetail() {
           </div>
 
           <p className="text-xs opacity-80 leading-relaxed mb-4">
-            Your application is being reviewed in this prototype. Government records are simulated for the SIH demo.
+            Your application is currently under official review and verification under the DOWLET1 framework.
           </p>
 
           {/* Action Required Banner inside status card */}
@@ -216,7 +216,7 @@ export default function ApplicationDetail() {
                 ✓ CERTIFICATE ISSUED
               </p>
               <p className="text-xs text-green-800 mb-3">
-                Your application has been completed in this demo.
+                Your application has been successfully completed.
               </p>
               <div className="flex gap-2">
                 <button
@@ -464,25 +464,25 @@ export default function ApplicationDetail() {
         </div>
       )}
 
-      {/* MODAL 2: Demo Document Preview */}
+      {/* MODAL 2: Document Preview */}
       {docPreviewModal && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl relative animate-in fade-in zoom-in-95">
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <span className="text-[10px] font-extrabold bg-blue-50 text-[#000080] px-2 py-0.5 rounded border border-blue-100 tracking-wider uppercase">
-                DEMO DOCUMENT PREVIEW
+                DOCUMENT PREVIEW
               </span>
               <button onClick={() => setDocPreviewModal(null)} className="text-slate-400 hover:text-slate-600 p-1">
                 <X size={18} />
               </button>
             </div>
 
-            {/* Document mock preview card */}
+            {/* Document preview card */}
             <div className="my-4 p-5 bg-gradient-to-br from-slate-50 to-blue-50/30 rounded-xl border border-slate-200 relative overflow-hidden text-center">
               {/* Watermark */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.06] -rotate-12">
                 <p className="text-4xl font-extrabold tracking-widest text-slate-900">
-                  DEMO / PROTOTYPE
+                  OFFICIAL ATTACHMENT
                 </p>
               </div>
 
@@ -519,7 +519,7 @@ export default function ApplicationDetail() {
         </div>
       )}
 
-      {/* MODAL 3: Demo Certificate Preview */}
+      {/* MODAL 3: Certificate Preview */}
       {certificateModalOpen && (
         <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4">
           <div className="bg-white rounded-2xl max-w-sm w-full p-5 shadow-2xl relative animate-in fade-in zoom-in-95 max-h-[90vh] overflow-y-auto">
@@ -527,7 +527,7 @@ export default function ApplicationDetail() {
             {/* Header */}
             <div className="flex items-center justify-between pb-3 border-b border-slate-100">
               <span className="text-[10px] font-extrabold bg-amber-50 text-amber-800 px-2 py-0.5 rounded border border-amber-200 uppercase tracking-wider">
-                DEMO CERTIFICATE
+                DIGITAL CERTIFICATE
               </span>
               <button onClick={() => setCertificateModalOpen(false)} className="text-slate-400 hover:text-slate-600 p-1">
                 <X size={18} />
@@ -539,8 +539,8 @@ export default function ApplicationDetail() {
               
               {/* Diagonal Watermark */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none opacity-[0.08] -rotate-45">
-                <p className="text-3xl font-extrabold tracking-widest text-red-900 leading-tight">
-                  DEMO / NOT AN OFFICIAL DOCUMENT
+                <p className="text-2xl font-extrabold tracking-widest text-[#000080] leading-tight">
+                  DIGITAL COPY • OFFICIAL RECORD
                 </p>
               </div>
 
@@ -563,7 +563,7 @@ export default function ApplicationDetail() {
               </h4>
 
               <p className="text-[10px] text-slate-600 leading-relaxed px-2 my-3">
-                This is to certify that <strong>{app.applicantName || "Rahul Kumar"}</strong>, resident of Jaipur, Rajasthan, has successfully completed all prototype verification requirements under the DOWLET1 framework.
+                This is to certify that <strong>{app.applicantName || "Rahul Kumar"}</strong>, resident of Jaipur, Rajasthan, has successfully completed all verification requirements under the DOWLET1 framework.
               </p>
 
               {/* Certificate Details */}

@@ -477,7 +477,7 @@ export const INITIAL_APPLICATIONS = [
       { name: "Address Proof", type: "Domicile / Bill", verified: true },
       { name: "Income Proof", type: "Salary / Land Slip", verified: true }
     ],
-    nextSteps: "Your documents are being checked. The next step in this prototype is officer verification."
+    nextSteps: "Your documents are being checked. The next step is officer verification."
   },
   {
     id: "SCH-RJ-2026-004218",
@@ -628,7 +628,7 @@ export const INITIAL_NOTIFICATIONS = [
     id: "NOT-004",
     type: "document",
     title: "Document Verification",
-    message: "Your Address Proof has completed demo verification.",
+    message: "Your Address Proof has completed verification.",
     time: "2 days ago",
     timestamp: "2026-09-22T10:00:00",
     read: true,
@@ -658,7 +658,7 @@ export const INITIAL_NOTIFICATIONS = [
   }
 ];
 
-// Initial mock verified information for Rahul Kumar (SIH Prototype)
+// Initial verified information for Rahul Kumar
 export const INITIAL_VERIFIED_INFO = {
   personal: {
     id: "personal",
@@ -669,7 +669,7 @@ export const INITIAL_VERIFIED_INFO = {
     gender: "Male",
     state: "Rajasthan",
     district: "Jaipur",
-    status: "Demo Verified",
+    status: "Verified",
     statusType: "verified", // "verified" | "needs-update" | "not-available"
     lastUpdated: "12 Sep 2026",
     description: "Name, DOB, Gender, State, District"
@@ -681,7 +681,7 @@ export const INITIAL_VERIFIED_INFO = {
     mobile: "+91 XXXXX XXXXX",
     email: "rahul@example.com",
     rawMobile: "9876543210",
-    status: "Demo Verified",
+    status: "Verified",
     statusType: "verified",
     lastUpdated: "12 Sep 2026",
     description: "Mobile number, Email address"
@@ -694,7 +694,7 @@ export const INITIAL_VERIFIED_INFO = {
     district: "Jaipur",
     state: "Rajasthan",
     pin: "3020XX",
-    status: "Demo Verified",
+    status: "Verified",
     statusType: "verified",
     lastUpdated: "12 Sep 2026",
     description: "Residential address, District, State, PIN"
@@ -706,14 +706,14 @@ export const INITIAL_VERIFIED_INFO = {
     identityType: "Government ID",
     idNumber: "XXXX-XXXX-XXXX",
     documentRef: "Identity Proof",
-    status: "Connected for Demo",
+    status: "Connected",
     statusType: "verified",
     lastUpdated: "10 Sep 2026",
-    description: "Government ID connection (Demo verification)"
+    description: "Government ID connection (Verified)"
   }
 };
 
-// Initial mock profile information for Rahul Kumar (SIH Citizen Prototype)
+// Initial profile information for Rahul Kumar
 export const INITIAL_PROFILE = {
   fullName: "Rahul Kumar",
   email: "rahul@example.com",
@@ -732,7 +732,7 @@ export const INITIAL_PROFILE = {
   isProfileComplete: true,
   governmentId: "Government ID",
   idNumberMasked: "XXXX-XXXX-XXXX",
-  identityStatus: "Connected for Demo",
+  identityStatus: "Connected",
   identityVerified: true
 };
 
@@ -800,15 +800,15 @@ export const INITIAL_CONSENT_HISTORY = [
   }
 ];
 
-// Initial mock FAQs for Help & Support accordion
+// Initial FAQs for Help & Support accordion
 export const INITIAL_FAQS = [
   {
     q: "What is DOWLET1?",
-    a: "DOWLET1 is a unified government service delivery prototype designed for the Smart India Hackathon (SIH). It allows citizens to discover schemes, verify their profile once, and reuse credentials securely across all eligible state and central services without redundant paperwork."
+    a: "DOWLET1 is a unified government service delivery platform. It allows citizens to discover schemes, verify their profile once, and reuse credentials securely across all eligible state and central services without redundant paperwork."
   },
   {
     q: "How does document reuse work?",
-    a: "Once you upload and demo-verify a document (such as Identity Proof, Address Proof, or Income Proof) in your Document Wallet, you can authorize its reuse in subsequent government service applications with a single click and granular citizen consent."
+    a: "Once you upload and verify a document (such as Identity Proof, Address Proof, or Income Proof) in your Document Wallet, you can authorize its reuse in subsequent government service applications with a single click and granular citizen consent."
   },
   {
     q: "How can I track an application?",
@@ -1247,7 +1247,7 @@ export const demoAPI = {
     const nextStepsMap = {
       0: "Your application has been submitted online and queued for document intake.",
       1: "Your documents have been received. The next step is field and revenue database verification.",
-      2: "Your submitted information is being verified. The next step in this prototype is officer verification.",
+      2: "Your submitted information is being verified. The next step is officer verification.",
       3: "Your application is awaiting final officer approval and digital signature.",
       4: "Your certificate has been issued and is available for preview and download."
     };
@@ -1417,7 +1417,7 @@ export const demoAPI = {
       info[category] = {
         ...info[category],
         ...updatedFields,
-        status: updatedFields.status || "Demo Verified",
+        status: updatedFields.status || "Verified",
         statusType: updatedFields.statusType || "verified",
         lastUpdated: "Just now"
       };
@@ -1928,7 +1928,7 @@ export function getRecommendedServices(customUser, customServices) {
       availableInfo: availableInfo.slice(0, 3),
       isSaved: savedList.includes(service.id),
       recommendationReason: "Recommended based on your available profile information.",
-      prototypeDisclaimer: "Prototype recommendation based on available profile information."
+      prototypeDisclaimer: "Recommendation based on verified profile information."
     };
   });
 

@@ -42,7 +42,7 @@ export default function ServiceList() {
           </div>
 
           {filteredServices.length > 0 ? (
-            <div className="space-y-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredServices.map((s) => (
                 <div key={s.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
                   <div className="flex items-start justify-between mb-2">

@@ -5,8 +5,137 @@
  * Uses localStorage to persist demo data across page reloads without a backend.
  */
 
+// Initial pristine documents for Document Wallet module
+export const INITIAL_DOCUMENTS = [
+  {
+    id: "DOC-001",
+    name: "Identity Proof",
+    type: "identity",
+    category: "Identity",
+    fileName: "identity_proof.pdf",
+    fileSize: "1.4 MB",
+    status: "verified", // "verified" | "pending" | "action_required" | "not_verified"
+    addedDate: "18 Sep 2026",
+    issuer: "UIDAI / Govt of India",
+    docNumberMasked: "XXXX-XXXX-4819",
+    expiryDate: "Permanent / Lifetime",
+    usedIn: [],
+    available: true,
+    verified: true
+  },
+  {
+    id: "DOC-002",
+    name: "Address Proof",
+    type: "address",
+    category: "Address",
+    fileName: "address_proof.pdf",
+    fileSize: "850 KB",
+    status: "verified",
+    addedDate: "19 Sep 2026",
+    issuer: "Rajasthan DISCOM / Electricity Dept",
+    docNumberMasked: "RJ-DIS-88219",
+    expiryDate: "Valid for 6 months",
+    usedIn: ["INC-RJ-2026-001245"],
+    available: true,
+    verified: true
+  },
+  {
+    id: "DOC-003",
+    name: "Income Proof",
+    type: "income",
+    category: "Income",
+    fileName: "income_proof.pdf",
+    fileSize: "1.2 MB",
+    status: "pending",
+    addedDate: "20 Sep 2026",
+    issuer: "Revenue Department, Rajasthan",
+    docNumberMasked: "INC-SAL-2026-991",
+    expiryDate: "31 Mar 2027",
+    usedIn: [],
+    available: true,
+    verified: false
+  }
+];
+
+export const INITIAL_DOCUMENT_ACTIVITY = [
+  {
+    id: "ACT-001",
+    title: "Income Proof uploaded",
+    time: "Today, 10:30 AM",
+    date: "20 Sep 2026",
+    type: "upload",
+    docId: "DOC-003",
+    status: "pending"
+  },
+  {
+    id: "ACT-002",
+    title: "Identity Proof reused for Income Certificate",
+    time: "Yesterday, 04:15 PM",
+    date: "19 Sep 2026",
+    type: "reuse",
+    docId: "DOC-001",
+    status: "reused"
+  },
+  {
+    id: "ACT-003",
+    title: "Address Proof verified via DISCOM mesh",
+    time: "20 Sep 2026, 02:00 PM",
+    date: "20 Sep 2026",
+    type: "verified",
+    docId: "DOC-002",
+    status: "verified"
+  }
+];
+
+// Initial pristine saved services for Saved Services module
+export const INITIAL_SAVED_SERVICES = [
+  {
+    id: "scholarship-001",
+    canonicalId: "scholarship",
+    name: "Scholarship Application",
+    category: "Education",
+    department: "Education Department",
+    description: "Apply for eligible education assistance and scholarship services.",
+    shortDescription: "Explore scholarship and education assistance services.",
+    icon: "🎓",
+    status: "Saved",
+    profileAvailable: true,
+    documentsAvailable: true,
+    recommendationNote: "Based on your available profile information."
+  },
+  {
+    id: "income-001",
+    canonicalId: "income_certificate",
+    name: "Income Certificate",
+    category: "Certificates",
+    department: "Revenue Department",
+    description: "Apply for an income certificate through the relevant service workflow.",
+    shortDescription: "Apply for an income certificate through the service workflow.",
+    icon: "📄",
+    status: "Saved",
+    profileAvailable: true,
+    documentsAvailable: true,
+    recommendationNote: "Based on your available profile information."
+  },
+  {
+    id: "pension-001",
+    canonicalId: "pension",
+    name: "Pension Service",
+    category: "Welfare",
+    department: "Social Welfare Department",
+    description: "Explore pension-related government services and application requirements.",
+    shortDescription: "Explore pension-related government services.",
+    icon: "🏦",
+    status: "Saved",
+    profileAvailable: true,
+    documentsAvailable: true,
+    recommendationNote: "Based on your available profile information."
+  }
+];
+
 // Initial pristine state for the demo
 const INITIAL_STATE = {
+  savedServices: ["scholarship", "income_certificate", "pension", "scholarship-001", "income-001", "pension-001"],
   user: {
     name: "Rahul Kumar",
     fullName: "Rahul Kumar",
@@ -26,12 +155,8 @@ const INITIAL_STATE = {
     mobile: true,
     identity: true
   },
-  documents: [
-    { name: "Identity Proof", status: "verified", available: true, verified: true },
-    { name: "Address Proof", status: "verified", available: true, verified: true },
-    { name: "Marksheet", status: "verified", available: true, verified: true },
-    { name: "Income Proof", status: "missing", available: false, verified: false }
-  ],
+  documents: INITIAL_DOCUMENTS,
+  documentActivity: INITIAL_DOCUMENT_ACTIVITY,
   services: [
     {
       id: "scholarship",
@@ -175,17 +300,17 @@ const INITIAL_STATE = {
     },
     {
       id: "pension",
-      name: "Pension Application",
+      name: "Pension Service",
       department: "Social Welfare Department",
       category: "Welfare",
-      shortDescription: "Monthly direct pension support for senior citizens and disabled.",
-      description: "Apply for old age, widow, or disability pension.",
+      shortDescription: "Explore pension-related government services.",
+      description: "Explore pension-related government services and application requirements.",
       eligibility: "Meeting age/disability criteria.",
       requiredDocuments: ["Identity Proof", "Age/Disability Proof", "Bank Account Proof"],
       recommendationTags: ["welfare", "pension"],
       processingTime: "45 days",
       online: true,
-      icon: "👴"
+      icon: "🏦"
     },
     {
       id: "social_welfare",
@@ -468,31 +593,69 @@ export const INITIAL_APPLICATIONS = [
 
 export const INITIAL_NOTIFICATIONS = [
   {
-    id: "notif_app_1",
-    title: "Application Update",
-    message: "Your Income Certificate application (INC-RJ-2026-001245) is currently under Verification in Progress.",
-    targetUrl: "/applications/INC-RJ-2026-001245",
+    id: "NOT-001",
+    type: "application",
+    title: "Application Status Updated",
+    message: "Your Income Certificate application is now under Verification in Progress.",
+    time: "2 min ago",
+    timestamp: "2026-09-24T18:30:00",
+    read: false,
     applicationId: "INC-RJ-2026-001245",
-    read: false,
-    timestamp: "Just now"
+    targetUrl: "/applications/INC-RJ-2026-001245"
   },
   {
-    id: "notif_app_2",
-    title: "Action Required",
-    message: "Scholarship Application (SCH-RJ-2026-004218) requires Bank Account Proof.",
-    targetUrl: "/applications/SCH-RJ-2026-004218",
+    id: "NOT-002",
+    type: "document",
+    title: "Document Available",
+    message: "Your Income Proof is available for reuse in eligible services.",
+    time: "1 hour ago",
+    timestamp: "2026-09-24T17:30:00",
+    read: false,
+    documentId: "DOC-003",
+    targetUrl: "/documents/DOC-003"
+  },
+  {
+    id: "NOT-003",
+    type: "application",
+    title: "Scholarship Application Update",
+    message: "Your Scholarship Application has moved to Officer Verification.",
+    time: "Yesterday",
+    timestamp: "2026-09-23T14:15:00",
+    read: false,
     applicationId: "SCH-RJ-2026-004218",
-    read: false,
-    timestamp: "1 hour ago"
+    targetUrl: "/applications/SCH-RJ-2026-004218"
   },
   {
-    id: "notif_app_3",
-    title: "Certificate Issued",
-    message: "Your Residence Certificate (RES-RJ-2026-009182) has been issued.",
-    targetUrl: "/applications/RES-RJ-2026-009182",
-    applicationId: "RES-RJ-2026-009182",
+    id: "NOT-004",
+    type: "document",
+    title: "Document Verification",
+    message: "Your Address Proof has completed demo verification.",
+    time: "2 days ago",
+    timestamp: "2026-09-22T10:00:00",
     read: true,
-    timestamp: "4 days ago"
+    documentId: "DOC-002",
+    targetUrl: "/documents/DOC-002"
+  },
+  {
+    id: "NOT-005",
+    type: "service",
+    title: "New Service Available",
+    message: "A new Education Assistance service has been added to DOWLET1.",
+    time: "3 days ago",
+    timestamp: "2026-09-21T09:00:00",
+    read: true,
+    serviceId: "education_assistance",
+    targetUrl: "/service-details/education_assistance"
+  },
+  {
+    id: "NOT-006",
+    type: "system",
+    title: "Profile Information Updated",
+    message: "Your DOWLET1 profile information was updated.",
+    time: "4 days ago",
+    timestamp: "2026-09-20T11:20:00",
+    read: true,
+    targetUrl: "/verified-info"
   }
 ];
 
@@ -551,12 +714,120 @@ export const INITIAL_VERIFIED_INFO = {
   }
 };
 
+// Initial mock profile information for Rahul Kumar (SIH Citizen Prototype)
+export const INITIAL_PROFILE = {
+  fullName: "Rahul Kumar",
+  email: "rahul@example.com",
+  mobile: "+91 XXXXX XXXXX",
+  rawMobile: "9876543210",
+  dob: "15 May 2005",
+  gender: "Male",
+  occupation: "Student",
+  income: "₹1,00,000 – ₹2,00,000",
+  annualIncome: "₹1,00,000 – ₹2,00,000",
+  state: "Rajasthan",
+  district: "Jaipur",
+  address: "Plot 42, Malviya Nagar, Jaipur, Rajasthan",
+  pincode: "302017",
+  profileCompletion: 85,
+  isProfileComplete: true,
+  governmentId: "Government ID",
+  idNumberMasked: "XXXX-XXXX-XXXX",
+  identityStatus: "Connected for Demo",
+  identityVerified: true
+};
+
 // Initial mock consent & data sharing settings
 export const INITIAL_CONSENT_SETTINGS = {
-  serviceDataSharing: true,
+  profileInfoReuse: true,
   profileReuse: true,
-  documentReuse: true
+  documentReuse: true,
+  applicationDataSharing: true,
+  serviceDataSharing: true,
+  personalizedRecommendations: true,
+  notifications: true
 };
+
+// Initial mock notification preferences
+export const INITIAL_NOTIFICATION_SETTINGS = {
+  applicationUpdates: true,
+  documentUpdates: true,
+  serviceUpdates: true,
+  systemNotifications: true
+};
+
+// Initial mock security & login settings
+export const INITIAL_SECURITY_SETTINGS = {
+  mobileEmailLogin: true,
+  otpVerification: true,
+  otpEnabled: true,
+  rememberMe: true,
+  sessionSecurity: "Active",
+  lastPasswordChange: "15 Aug 2026",
+  activeSessionsCount: 1
+};
+
+// Initial mock consent history log
+export const INITIAL_CONSENT_HISTORY = [
+  {
+    id: "CH-001",
+    service: "Income Certificate",
+    serviceName: "Income Certificate",
+    purpose: "Information shared for application",
+    description: "Information shared for application",
+    date: "24 Sep 2026",
+    time: "Today, 11:30 AM",
+    sharedFields: ["Full Name", "Address Proof", "Government ID"]
+  },
+  {
+    id: "CH-002",
+    service: "Scholarship Application",
+    serviceName: "Scholarship Application",
+    purpose: "Profile information reused",
+    description: "Profile information reused",
+    date: "22 Sep 2026",
+    time: "22 Sep 2026, 03:15 PM",
+    sharedFields: ["Full Name", "DOB", "Student Marksheet", "Income Proof"]
+  },
+  {
+    id: "CH-003",
+    service: "Residence Certificate",
+    serviceName: "Residence Certificate",
+    purpose: "Address & Identity verified",
+    description: "Address & Identity verified",
+    date: "18 Sep 2026",
+    time: "18 Sep 2026, 10:00 AM",
+    sharedFields: ["Address", "Aadhaar e-KYC"]
+  }
+];
+
+// Initial mock FAQs for Help & Support accordion
+export const INITIAL_FAQS = [
+  {
+    q: "What is DOWLET1?",
+    a: "DOWLET1 is a unified government service delivery prototype designed for the Smart India Hackathon (SIH). It allows citizens to discover schemes, verify their profile once, and reuse credentials securely across all eligible state and central services without redundant paperwork."
+  },
+  {
+    q: "How does document reuse work?",
+    a: "Once you upload and demo-verify a document (such as Identity Proof, Address Proof, or Income Proof) in your Document Wallet, you can authorize its reuse in subsequent government service applications with a single click and granular citizen consent."
+  },
+  {
+    q: "How can I track an application?",
+    a: "Navigate to My Applications to view real-time stage progression across the 5 official milestone stages: Application Submitted → Documents Received → Verification in Progress → Officer Verification → Certificate Issued."
+  },
+  {
+    q: "How does citizen consent work?",
+    a: "DOWLET1 strictly adheres to citizen-first data governance. Before any verified personal record or document is shared with a department, a clear consent disclosure is shown detailing exactly which fields and files are being transferred."
+  },
+  {
+    q: "What is Verified Information?",
+    a: "Verified Information is your pre-verified digital citizen record (e-KYC Personal details, Address, and Government ID). It forms the foundational mesh that enables zero-form-filling when applying for public services."
+  },
+  {
+    q: "Can I update my profile?",
+    a: "Yes! You can edit your personal details, update contact parameters, or adjust your language and consent preferences directly from the Profile & Settings module."
+  }
+];
 
 // Initial mock information usage history
 export const INITIAL_INFORMATION_USAGE = [
@@ -595,6 +866,9 @@ export const demoAPI = {
    * Initializes state if it doesn't exist or upgrades existing demo state
    */
   init() {
+    if (!localStorage.getItem('dowlet1_saved_services')) {
+      localStorage.setItem('dowlet1_saved_services', JSON.stringify(INITIAL_SAVED_SERVICES));
+    }
     const existing = localStorage.getItem('dowlet1_demo_state');
     if (!existing) {
       localStorage.setItem('dowlet1_demo_state', JSON.stringify({
@@ -622,9 +896,39 @@ export const demoAPI = {
           updated = true;
         }
 
-        // Ensure consentSettings exists
-        if (!parsed.consentSettings) {
-          parsed.consentSettings = INITIAL_CONSENT_SETTINGS;
+        // Ensure profile exists
+        if (!parsed.profile || !parsed.profile.fullName) {
+          parsed.profile = { ...INITIAL_PROFILE, ...(parsed.profile || {}) };
+          updated = true;
+        }
+
+        // Ensure consentSettings exists and has all keys
+        if (!parsed.consentSettings || parsed.consentSettings.profileInfoReuse === undefined) {
+          parsed.consentSettings = { ...INITIAL_CONSENT_SETTINGS, ...(parsed.consentSettings || {}) };
+          updated = true;
+        }
+
+        // Ensure notificationSettings exists
+        if (!parsed.notificationSettings) {
+          parsed.notificationSettings = INITIAL_NOTIFICATION_SETTINGS;
+          updated = true;
+        }
+
+        // Ensure securitySettings exists
+        if (!parsed.securitySettings) {
+          parsed.securitySettings = INITIAL_SECURITY_SETTINGS;
+          updated = true;
+        }
+
+        // Ensure consentHistory exists
+        if (!parsed.consentHistory || parsed.consentHistory.length === 0) {
+          parsed.consentHistory = INITIAL_CONSENT_HISTORY;
+          updated = true;
+        }
+
+        // Ensure language exists
+        if (!parsed.language) {
+          parsed.language = "English";
           updated = true;
         }
 
@@ -646,8 +950,8 @@ export const demoAPI = {
           updated = true;
         }
 
-        // Ensure notifications exist
-        if (!parsed.notifications || parsed.notifications.length === 0) {
+        // Ensure notifications exist with rich mock structure
+        if (!parsed.notifications || parsed.notifications.length === 0 || !parsed.notifications[0].id || parsed.notifications[0].id.startsWith('notif_app_')) {
           parsed.notifications = INITIAL_NOTIFICATIONS;
           updated = true;
         }
@@ -658,12 +962,25 @@ export const demoAPI = {
           updated = true;
         }
 
+        // Ensure rich documents and activity exist
+        if (!parsed.documents || parsed.documents.length === 0 || !parsed.documents[0].id) {
+          parsed.documents = INITIAL_DOCUMENTS;
+          parsed.documentActivity = INITIAL_DOCUMENT_ACTIVITY;
+          updated = true;
+        }
+        if (!parsed.documentActivity) {
+          parsed.documentActivity = INITIAL_DOCUMENT_ACTIVITY;
+          updated = true;
+        }
+
         if (updated) {
           localStorage.setItem('dowlet1_demo_state', JSON.stringify(parsed));
         }
       } catch (err) {
         localStorage.setItem('dowlet1_demo_state', JSON.stringify({
           ...INITIAL_STATE,
+          documents: INITIAL_DOCUMENTS,
+          documentActivity: INITIAL_DOCUMENT_ACTIVITY,
           applications: INITIAL_APPLICATIONS,
           notifications: INITIAL_NOTIFICATIONS,
           verifiedInfo: INITIAL_VERIFIED_INFO,
@@ -678,8 +995,11 @@ export const demoAPI = {
    * Resets the entire demo state
    */
   reset() {
+    localStorage.setItem('dowlet1_saved_services', JSON.stringify(INITIAL_SAVED_SERVICES));
     localStorage.setItem('dowlet1_demo_state', JSON.stringify({
       ...INITIAL_STATE,
+      documents: INITIAL_DOCUMENTS,
+      documentActivity: INITIAL_DOCUMENT_ACTIVITY,
       applications: INITIAL_APPLICATIONS,
       notifications: INITIAL_NOTIFICATIONS,
       verifiedInfo: INITIAL_VERIFIED_INFO,
@@ -760,10 +1080,20 @@ export const demoAPI = {
    */
   getService(id) {
     if (!id) return null;
-    if (id === 'employment' || id === 'employment_registration') {
+    const cleanId = String(id).trim().toLowerCase();
+    if (cleanId === 'scholarship-001' || cleanId === 'scholarship') {
+      return this.getState().services.find(s => s.id === 'scholarship');
+    }
+    if (cleanId === 'income-001' || cleanId === 'income_certificate' || cleanId === 'income') {
+      return this.getState().services.find(s => s.id === 'income_certificate');
+    }
+    if (cleanId === 'pension-001' || cleanId === 'pension') {
+      return this.getState().services.find(s => s.id === 'pension');
+    }
+    if (cleanId === 'employment' || cleanId === 'employment_registration') {
       return this.getState().services.find(s => s.id === 'employment' || s.id === 'employment_registration');
     }
-    return this.getState().services.find(s => s.id === id);
+    return this.getState().services.find(s => s.id === id || s.id.toLowerCase() === cleanId);
   },
 
   /**
@@ -809,33 +1139,34 @@ export const demoAPI = {
   },
 
   /**
-   * Save a service
+   * Save a service (delegates to centralized savedServices system)
    */
   saveService(id) {
-    const state = this.getState();
-    if (!state.savedServices) state.savedServices = [];
-    if (!state.savedServices.includes(id)) {
-      state.savedServices.push(id);
-      this.updateState({ savedServices: state.savedServices });
-    }
+    return saveService(id);
   },
 
   removeSavedService(id) {
-    const state = this.getState();
-    if (!state.savedServices) return;
-    const filtered = state.savedServices.filter(s => s !== id);
-    this.updateState({ savedServices: filtered });
+    return removeSavedService(id);
   },
 
   isServiceSaved(id) {
-    const state = this.getState();
-    return (state.savedServices || []).includes(id);
+    return isServiceSaved(id);
+  },
+
+  toggleSavedService(id) {
+    return toggleSavedService(id);
   },
 
   getSavedServices() {
-    const state = this.getState();
-    const savedIds = state.savedServices || [];
-    return state.services.filter(s => savedIds.includes(s.id));
+    return getSavedServices();
+  },
+
+  searchSavedServices(query) {
+    return searchSavedServices(query);
+  },
+
+  filterSavedServices(category) {
+    return filterSavedServices(category);
   },
 
   /**
@@ -1032,22 +1363,18 @@ export const demoAPI = {
   /**
    * Creates an in-app notification for an application status change
    */
-  createNotification(app, message) {
-    const state = this.getState();
-    const notifs = state.notifications || [];
-    const newNotif = {
-      id: `notif_${Date.now()}_${Math.random().toString(36).substr(2, 4)}`,
-      title: "Application Update",
-      message: message || `Status changed for ${app.serviceName}.`,
-      targetUrl: `/applications/${app.id}`,
+  createNotification(appOrData, message) {
+    if (appOrData && typeof appOrData === 'object' && appOrData.title && appOrData.message) {
+      return createNotification(appOrData);
+    }
+    const app = appOrData || {};
+    return createNotification({
+      type: "application",
+      title: "Application Status Updated",
+      message: message || `Status changed for ${app.serviceName || 'Application'}.`,
       applicationId: app.id,
-      read: false,
-      timestamp: "Just now"
-    };
-
-    const updatedNotifs = [newNotif, ...notifs].slice(0, 15);
-    this.updateState({ notifications: updatedNotifs });
-    return newNotif;
+      targetUrl: `/applications/${app.id}`
+    });
   },
 
   /**
@@ -1138,6 +1465,9 @@ export const demoAPI = {
     const state = this.getState();
     const settings = { ...(state.consentSettings || INITIAL_CONSENT_SETTINGS), [key]: value };
     this.updateState({ consentSettings: settings });
+    try {
+      localStorage.setItem('dowlet1_consent_settings', JSON.stringify(settings));
+    } catch (e) {}
     return settings;
   },
 
@@ -1173,8 +1503,140 @@ export const demoAPI = {
  * Simulates a real NLP AI by matching keywords in the query to predefined intents and entities.
  */
 export const detectIntent = (query) => {
-  const q = (query || '').toLowerCase();
+  const q = (query || '').toLowerCase().trim();
   
+  // -1. Saved Services Intent Detection (English & Hindi)
+  if (
+    q.includes("open my saved") ||
+    q.includes("open saved") ||
+    q.includes("go to saved services") ||
+    q.includes("saved services page") ||
+    q.includes("saved services kholo")
+  ) {
+    return {
+      intent: "OPEN_SAVED_SERVICE",
+      message: "Opening your Saved Services page..."
+    };
+  }
+
+  if (
+    (q.includes("remove") && (q.includes("saved") || q.includes("bookmark"))) ||
+    q.includes("unsave") ||
+    (q.includes("hatao") && q.includes("saved"))
+  ) {
+    const saved = getSavedServices();
+    const matchedService = saved.find(s => 
+      q.includes(s.name.toLowerCase()) || 
+      (s.category && q.includes(s.category.toLowerCase())) ||
+      (q.includes("scholarship") && (s.name.toLowerCase().includes("scholarship") || s.id.includes("scholarship"))) ||
+      (q.includes("income") && (s.name.toLowerCase().includes("income") || s.id.includes("income"))) ||
+      (q.includes("pension") && (s.name.toLowerCase().includes("pension") || s.id.includes("pension")))
+    ) || saved[0];
+
+    if (matchedService) {
+      removeSavedService(matchedService.id);
+      return {
+        intent: "REMOVE_SAVED_SERVICE",
+        service: matchedService,
+        message: `Removed ${matchedService.name} from your Saved Services.`
+      };
+    } else {
+      return {
+        intent: "REMOVE_SAVED_SERVICE",
+        service: null,
+        message: "No matching saved service found to remove."
+      };
+    }
+  }
+
+  if (
+    q.includes("apply for my saved") ||
+    q.includes("apply saved service") ||
+    q.includes("apply for saved") ||
+    (q.includes("apply") && q.includes("saved"))
+  ) {
+    const saved = getSavedServices();
+    const matchedService = saved.find(s => 
+      q.includes(s.name.toLowerCase()) || 
+      (q.includes("scholarship") && s.name.toLowerCase().includes("scholarship")) ||
+      (q.includes("income") && s.name.toLowerCase().includes("income")) ||
+      (q.includes("pension") && s.name.toLowerCase().includes("pension"))
+    ) || saved[0];
+
+    return {
+      intent: "APPLY_SAVED_SERVICE",
+      service: matchedService,
+      savedServices: saved,
+      message: matchedService 
+        ? `You can apply directly for ${matchedService.name}.`
+        : "Here are your saved services you can apply for."
+    };
+  }
+
+  if (
+    q.includes("show my saved") ||
+    q.includes("which services did i save") ||
+    q.includes("services did i save") ||
+    q.includes("saved services") ||
+    q.includes("my saved") ||
+    q.includes("what services did i save") ||
+    q.includes("saved services dikhao") ||
+    q.includes("mere saved") ||
+    q === "saved"
+  ) {
+    const saved = getSavedServices();
+    return {
+      intent: "SAVED_SERVICES",
+      savedServices: saved,
+      message: "Here are the services you saved for later."
+    };
+  }
+
+  // 0. Notification & Update inquiries (English & Hindi)
+  // Check for specific application update first (e.g., "Mere income certificate ka update kya hai?")
+  if (
+    (q.includes("update") || q.includes("kya update") || q.includes("updates") || q.includes("notification") || q.includes("notifications")) &&
+    (q.includes("income") || q.includes("scholarship") || q.includes("residence") || q.includes("certificate"))
+  ) {
+    const state = demoAPI.getState();
+    const apps = state.applications || [];
+    const notifs = getNotifications();
+    const matchedApp = apps.find(a => 
+      (q.includes("income") && a.serviceName.toLowerCase().includes("income")) ||
+      (q.includes("scholarship") && a.serviceName.toLowerCase().includes("scholarship")) ||
+      (q.includes("residence") && a.serviceName.toLowerCase().includes("residence"))
+    ) || apps[0];
+
+    const relatedNotif = notifs.find(n => n.applicationId === matchedApp?.id) || notifs[0];
+
+    return {
+      intent: "APPLICATION_UPDATE_QUERY",
+      application: matchedApp,
+      notification: relatedNotif,
+      message: `Your ${matchedApp.serviceName} application is currently under ${matchedApp.currentStatus || matchedApp.status}.`
+    };
+  }
+
+  // General notification queries
+  if (
+    q.includes("mere notifications") ||
+    q.includes("notification") || 
+    q.includes("notifications") || 
+    q.includes("kya update") || 
+    q.includes("latest update") || 
+    q.includes("koi update") || 
+    q.includes("recent updates")
+  ) {
+    const unread = getUnreadNotifications();
+    const all = getNotifications();
+    return {
+      intent: "NOTIFICATION_QUERY",
+      notifications: all,
+      unreadCount: unread.length,
+      unreadNotifications: unread
+    };
+  }
+
   // 1. Check for specific applications in progress (Tracking)
   if (
     q.includes("kaha") || 
@@ -1229,30 +1691,89 @@ export const detectIntent = (query) => {
     }
   }
 
-  // 3. Document inquiries
-  if (q.includes("document") || q.includes("kaunse") || q.includes("wallet")) {
-    return { intent: "CHECK_DOCUMENTS" };
-  }
-
-  // 4. Profile & Verified Information inquiries (English & Hindi)
+  // 3. Profile & Verified Information inquiries (English & Hindi)
   if (
     q.includes("profile") || 
-    q.includes("information") || 
-    q.includes("verified") || 
-    q.includes("kya hai") || 
-    q.includes("details") || 
-    q.includes("address") ||
-    q.includes("pehchan") ||
+    q.includes("mera profile") ||
+    q.includes("meri profile") ||
     q.includes("meri jankari") ||
-    q.includes("mera naam")
+    q.includes("mera naam") ||
+    q.includes("verified info")
   ) {
     return { 
       intent: "PROFILE_INFORMATION",
+      profile: getProfile(),
+      user: demoAPI.getUser(),
       verifiedInfo: demoAPI.getVerifiedInformation()
     };
   }
 
-  // 5. Help / General
+  // 4. Consent & Data Sharing inquiries (English & Hindi)
+  if (q.includes("consent") || q.includes("data sharing") || q.includes("sharing settings")) {
+    return {
+      intent: "CONSENT_QUERY",
+      consentSettings: getConsentSettings()
+    };
+  }
+
+  // 5. Privacy & Security inquiries
+  if (q.includes("privacy") || q.includes("security") || q.includes("password") || q.includes("suraksha")) {
+    return {
+      intent: "PRIVACY_QUERY",
+      securitySettings: getSecuritySettings()
+    };
+  }
+
+  // 6. Settings inquiries
+  if (q.includes("settings") || q.includes("setting") || q.includes("settings kholo")) {
+    return {
+      intent: "SETTINGS_QUERY"
+    };
+  }
+
+  // 7. Language inquiries
+  if (q.includes("language") || q.includes("bhasha") || q.includes("change language")) {
+    return {
+      intent: "LANGUAGE_QUERY",
+      language: getLanguage()
+    };
+  }
+
+  // 8. Logout inquiries
+  if (q.includes("logout") || q.includes("log out") || q.includes("sign out") || q.includes("bahar nikalna")) {
+    return {
+      intent: "LOGOUT_QUERY"
+    };
+  }
+
+  // 9. Document inquiries (English & Hindi)
+  if (
+    q.includes("document") || 
+    q.includes("documents") || 
+    q.includes("wallet") ||
+    q.includes("mere documents") ||
+    q.includes("document dikhao") ||
+    q.includes("documents dikhao") ||
+    q.includes("income proof") ||
+    q.includes("address proof") ||
+    q.includes("identity proof") ||
+    q.includes("kaunse verified") ||
+    q.includes("available hai")
+  ) {
+    const docs = getDocuments();
+    let querySpecificDoc = null;
+    if (q.includes("income")) querySpecificDoc = docs.find(d => d.type === 'income');
+    else if (q.includes("address")) querySpecificDoc = docs.find(d => d.type === 'address');
+    else if (q.includes("identity") || q.includes("aadhaar")) querySpecificDoc = docs.find(d => d.type === 'identity');
+
+    return { 
+      intent: "DOCUMENT_QUERY",
+      documents: docs,
+      specificDoc: querySpecificDoc
+    };
+  }
+
+  // 10. Help / General
   if (q.includes("help") || q.includes("madad") || q.includes("hi") || q.includes("hello")) {
     return { intent: "HELP" };
   }
@@ -1417,22 +1938,155 @@ export function getRecommendedServices(customUser, customServices) {
 }
 
 /**
- * Save / unsave service helpers
+ * SAVED SERVICES SYSTEM FUNCTIONS (DOWLET1 PROTOTYPE)
  */
-export function saveService(id) {
-  demoAPI.saveService(id);
+export function normalizeServiceId(id) {
+  if (!id) return '';
+  const s = String(id).trim().toLowerCase();
+  if (s === 'scholarship-001' || s === 'scholarship') return 'scholarship';
+  if (s === 'income-001' || s === 'income_certificate' || s === 'income') return 'income_certificate';
+  if (s === 'pension-001' || s === 'pension') return 'pension';
+  if (s === 'employment_registration' || s === 'employment') return 'employment';
+  return s;
 }
 
-export function removeSavedService(id) {
-  demoAPI.removeSavedService(id);
-}
-
-export function isServiceSaved(id) {
-  return demoAPI.isServiceSaved(id);
+export function areServiceIdsEqual(id1, id2) {
+  if (!id1 || !id2) return false;
+  if (id1 === id2) return true;
+  return normalizeServiceId(id1) === normalizeServiceId(id2);
 }
 
 export function getSavedServices() {
-  return demoAPI.getSavedServices();
+  try {
+    const raw = localStorage.getItem('dowlet1_saved_services');
+    if (!raw) {
+      localStorage.setItem('dowlet1_saved_services', JSON.stringify(INITIAL_SAVED_SERVICES));
+      return INITIAL_SAVED_SERVICES;
+    }
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) {
+      localStorage.setItem('dowlet1_saved_services', JSON.stringify(INITIAL_SAVED_SERVICES));
+      return INITIAL_SAVED_SERVICES;
+    }
+    return parsed;
+  } catch (e) {
+    console.error("Error reading dowlet1_saved_services:", e);
+    return INITIAL_SAVED_SERVICES;
+  }
+}
+
+export function saveService(serviceId) {
+  if (!serviceId) return;
+  const targetId = typeof serviceId === 'object' ? serviceId.id : serviceId;
+  const currentSaved = getSavedServices();
+  
+  // Check if already saved
+  const exists = currentSaved.find(s => areServiceIdsEqual(s.id, targetId) || areServiceIdsEqual(s.canonicalId, targetId));
+  if (exists) {
+    return exists;
+  }
+
+  // Look up full service definition
+  let serviceObj = null;
+  if (typeof serviceId === 'object' && serviceId.name) {
+    serviceObj = serviceId;
+  } else {
+    serviceObj = demoAPI.getService(targetId) || INITIAL_SAVED_SERVICES.find(s => areServiceIdsEqual(s.id, targetId));
+  }
+
+  const newItem = {
+    id: serviceObj?.id || targetId,
+    canonicalId: normalizeServiceId(serviceObj?.id || targetId),
+    name: serviceObj?.name || (String(targetId).includes('scholarship') ? "Scholarship Application" : targetId),
+    category: serviceObj?.category || "Services",
+    department: serviceObj?.department || "Government Department",
+    description: serviceObj?.description || serviceObj?.shortDescription || "Apply for eligible government services and assistance.",
+    shortDescription: serviceObj?.shortDescription || serviceObj?.description || "Explore government services.",
+    icon: serviceObj?.icon || "📄",
+    status: "Saved",
+    profileAvailable: true,
+    documentsAvailable: true,
+    recommendationNote: "Based on your available profile information."
+  };
+
+  const updated = [newItem, ...currentSaved];
+  localStorage.setItem('dowlet1_saved_services', JSON.stringify(updated));
+
+  // Sync with dowlet1_demo_state.savedServices
+  try {
+    const rawDemo = localStorage.getItem('dowlet1_demo_state');
+    if (rawDemo) {
+      const demoState = JSON.parse(rawDemo);
+      const list = demoState.savedServices || [];
+      const canonical = normalizeServiceId(targetId);
+      const toAdd = [targetId, canonical].filter(Boolean);
+      demoState.savedServices = Array.from(new Set([...list, ...toAdd]));
+      localStorage.setItem('dowlet1_demo_state', JSON.stringify(demoState));
+    }
+  } catch (err) {
+    console.error("Error syncing demoState.savedServices:", err);
+  }
+
+  return newItem;
+}
+
+export function removeSavedService(serviceId) {
+  if (!serviceId) return;
+  const targetId = typeof serviceId === 'object' ? serviceId.id : serviceId;
+  const currentSaved = getSavedServices();
+  const updated = currentSaved.filter(s => !areServiceIdsEqual(s.id, targetId) && !areServiceIdsEqual(s.canonicalId, targetId));
+  localStorage.setItem('dowlet1_saved_services', JSON.stringify(updated));
+
+  // Sync with dowlet1_demo_state.savedServices
+  try {
+    const rawDemo = localStorage.getItem('dowlet1_demo_state');
+    if (rawDemo) {
+      const demoState = JSON.parse(rawDemo);
+      if (demoState.savedServices) {
+        demoState.savedServices = demoState.savedServices.filter(id => !areServiceIdsEqual(id, targetId));
+        localStorage.setItem('dowlet1_demo_state', JSON.stringify(demoState));
+      }
+    }
+  } catch (err) {
+    console.error("Error updating demoState on removeSavedService:", err);
+  }
+  return updated;
+}
+
+export function isServiceSaved(serviceId) {
+  if (!serviceId) return false;
+  const targetId = typeof serviceId === 'object' ? serviceId.id : serviceId;
+  const saved = getSavedServices();
+  return saved.some(s => areServiceIdsEqual(s.id, targetId) || areServiceIdsEqual(s.canonicalId, targetId));
+}
+
+export function toggleSavedService(serviceId) {
+  if (isServiceSaved(serviceId)) {
+    removeSavedService(serviceId);
+    return false;
+  } else {
+    saveService(serviceId);
+    return true;
+  }
+}
+
+export function searchSavedServices(query) {
+  const all = getSavedServices();
+  if (!query || !query.trim()) return all;
+  const q = query.trim().toLowerCase();
+  return all.filter(s => 
+    (s.name && s.name.toLowerCase().includes(q)) ||
+    (s.department && s.department.toLowerCase().includes(q)) ||
+    (s.category && s.category.toLowerCase().includes(q)) ||
+    (s.description && s.description.toLowerCase().includes(q)) ||
+    (s.shortDescription && s.shortDescription.toLowerCase().includes(q))
+  );
+}
+
+export function filterSavedServices(category) {
+  const all = getSavedServices();
+  if (!category || category.toLowerCase() === 'all') return all;
+  return all.filter(s => s.category && s.category.toLowerCase() === category.toLowerCase());
 }
 
 /**
@@ -1555,12 +2209,6 @@ export function resolveActionRequired(id, docName) {
   return demoAPI.resolveActionRequired(id, docName);
 }
 
-/**
- * Creates an in-app notification
- */
-export function createNotification(application, message) {
-  return demoAPI.createNotification(application, message);
-}
 
 /**
  * Saves applications array to state
@@ -1583,16 +2231,6 @@ export function resetDemoData() {
   demoAPI.reset();
 }
 
-/**
- * Notifications access
- */
-export function getNotifications() {
-  return demoAPI.getNotifications();
-}
-
-export function markNotificationsAsRead() {
-  demoAPI.markNotificationsAsRead();
-}
 
 // ==================================================
 // VERIFIED INFORMATION SYSTEM FUNCTIONS (DOWLET1 PROTOTYPE)
@@ -1693,5 +2331,945 @@ export function reuseInformation(navigate, serviceId) {
   navigate(`/apply/${serviceId}?reuse=true`);
 }
 
+// ═══════════════ ROLE-BASED ACCESS HELPERS ═══════════════
+
+/**
+ * Gets the current active user role: 'citizen' | 'officer' | 'admin'
+ */
+export function getCurrentRole() {
+  const role = localStorage.getItem('dowlet1_active_role');
+  return role || 'citizen';
+}
+
+/**
+ * Sets the active user role
+ */
+export function setCurrentRole(role) {
+  localStorage.setItem('dowlet1_active_role', role);
+}
+
+/**
+ * Gets pending applications for government officer review
+ */
+export function getOfficerPendingApplications() {
+  demoAPI.init();
+  const apps = demoAPI.getApplications();
+  return apps;
+}
+
+/**
+ * Officer approves an application and advances it or completes it
+ */
+export function approveOfficerApplication(appId, officerNotes = 'Approved after verification') {
+  demoAPI.init();
+  const state = JSON.parse(localStorage.getItem('dowlet1_demo_state'));
+  if (state && state.applications) {
+    state.applications = state.applications.map(app => {
+      if (app.id === appId) {
+        const nextStep = Math.min(4, (app.statusStep || 0) + 1);
+        const isComplete = nextStep >= 4;
+        return {
+          ...app,
+          statusStep: nextStep,
+          status: isComplete ? 'Certificate Issued' : 'Officer Verified',
+          statusType: isComplete ? 'completed' : 'in-progress',
+          officerNotes: officerNotes,
+          lastUpdated: 'Just now'
+        };
+      }
+      return app;
+    });
+    localStorage.setItem('dowlet1_demo_state', JSON.stringify(state));
+    return true;
+  }
+  return false;
+}
+
+/**
+ * Officer flags application for applicant action
+ */
+export function requestOfficerAction(appId, message = 'Please re-upload latest income proof') {
+  demoAPI.init();
+  const state = JSON.parse(localStorage.getItem('dowlet1_demo_state'));
+  if (state && state.applications) {
+    state.applications = state.applications.map(app => {
+      if (app.id === appId) {
+        return {
+          ...app,
+          status: 'Action Required',
+          statusType: 'action-required',
+          actionRequiredMessage: message,
+          lastUpdated: 'Just now'
+        };
+      }
+      return app;
+    });
+    localStorage.setItem('dowlet1_demo_state', JSON.stringify(state));
+    return true;
+  }
+  return false;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DOWLET1 CENTRAL DOCUMENT WALLET MANAGEMENT FUNCTIONS
+// ══════════════════════════════════════════════════════════════════
+
+/**
+ * Returns all documents from the central prototype state
+ */
+export function getDocuments() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.documents || INITIAL_DOCUMENTS;
+}
+
+/**
+ * Returns a specific document by its unique ID
+ */
+export function getDocumentById(id) {
+  const docs = getDocuments();
+  return docs.find(d => d.id === id) || null;
+}
+
+/**
+ * Filters documents by category
+ */
+export function filterDocuments(category) {
+  const docs = getDocuments();
+  if (!category || category.toLowerCase() === 'all') return docs;
+  const cat = category.toLowerCase();
+  return docs.filter(d => 
+    (d.category && d.category.toLowerCase() === cat) ||
+    (d.type && d.type.toLowerCase() === cat)
+  );
+}
+
+/**
+ * Searches documents by query across name, type, category, issuer, and fileName
+ */
+export function searchDocuments(query) {
+  const docs = getDocuments();
+  if (!query || !query.trim()) return docs;
+  const q = query.toLowerCase().trim();
+  return docs.filter(d => 
+    (d.name && d.name.toLowerCase().includes(q)) ||
+    (d.type && d.type.toLowerCase().includes(q)) ||
+    (d.category && d.category.toLowerCase().includes(q)) ||
+    (d.issuer && d.issuer.toLowerCase().includes(q)) ||
+    (d.fileName && d.fileName.toLowerCase().includes(q))
+  );
+}
+
+/**
+ * Uploads a new document to the prototype Document Wallet
+ */
+export function uploadDocument(data) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const docs = state.documents || [...INITIAL_DOCUMENTS];
+  const newId = `DOC-00${docs.length + 1}`;
+  
+  const categoryMap = {
+    'identity': 'Identity',
+    'address': 'Address',
+    'income': 'Income',
+    'education': 'Education',
+    'caste': 'Certificates',
+    'residence': 'Address',
+    'other': 'Other'
+  };
+
+  const newDoc = {
+    id: newId,
+    name: data.name || "Uploaded Document",
+    type: data.type || "other",
+    category: categoryMap[data.type] || data.category || "Other",
+    fileName: data.fileName || `${(data.name || 'document').toLowerCase().replace(/\s+/g, '_')}.pdf`,
+    fileSize: data.fileSize || "1.2 MB",
+    status: "pending", // initial status Verification Pending
+    addedDate: data.addedDate || "Today",
+    issuer: data.issuer || "Self-Uploaded",
+    docNumberMasked: data.docNumberMasked || "XXXX-XXXX-9921",
+    expiryDate: data.expiryDate || "Valid for 1 year",
+    usedIn: [],
+    available: true,
+    verified: false
+  };
+
+  const updatedDocs = [newDoc, ...docs];
+  state.documents = updatedDocs;
+  
+  // Add activity log
+  const activityList = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+  const newActivity = {
+    id: `ACT-${Date.now()}`,
+    title: `${newDoc.name} uploaded`,
+    time: "Today",
+    date: "Today",
+    type: "upload",
+    docId: newDoc.id,
+    status: "pending"
+  };
+  state.documentActivity = [newActivity, ...activityList];
+
+  demoAPI.updateState({ documents: updatedDocs, documentActivity: state.documentActivity });
+  saveDocuments(updatedDocs);
+
+  // Trigger Notification
+  createNotification({
+    type: "document",
+    title: "Document Available",
+    message: `Your ${newDoc.name} is uploaded and available for reuse in eligible services.`,
+    documentId: newDoc.id,
+    targetUrl: `/documents/${newDoc.id}`
+  });
+
+  return newDoc;
+}
+
+/**
+ * Replaces an existing document with a new simulated file
+ */
+export function replaceDocument(id, data) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const docs = state.documents || [...INITIAL_DOCUMENTS];
+  
+  let targetDoc = null;
+  const updatedDocs = docs.map(doc => {
+    if (doc.id === id) {
+      targetDoc = {
+        ...doc,
+        fileName: data.fileName || doc.fileName,
+        fileSize: data.fileSize || doc.fileSize,
+        status: "pending", // returns to Verification Pending
+        verified: false,
+        addedDate: "Today (Updated)"
+      };
+      return targetDoc;
+    }
+    return doc;
+  });
+
+  state.documents = updatedDocs;
+  if (targetDoc) {
+    const activityList = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+    state.documentActivity = [
+      {
+        id: `ACT-${Date.now()}`,
+        title: `${targetDoc.name} replaced with new file`,
+        time: "Today",
+        date: "Today",
+        type: "replace",
+        docId: targetDoc.id,
+        status: "pending"
+      },
+      ...activityList
+    ];
+  }
+
+  demoAPI.updateState({ documents: updatedDocs, documentActivity: state.documentActivity });
+  saveDocuments(updatedDocs);
+  return targetDoc;
+}
+
+/**
+ * Deletes a document from the prototype wallet
+ */
+export function deleteDocument(id) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const docs = state.documents || [...INITIAL_DOCUMENTS];
+  const toDelete = docs.find(d => d.id === id);
+  const updatedDocs = docs.filter(d => d.id !== id);
+  
+  state.documents = updatedDocs;
+  if (toDelete) {
+    const activityList = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+    state.documentActivity = [
+      {
+        id: `ACT-${Date.now()}`,
+        title: `${toDelete.name} removed from wallet`,
+        time: "Today",
+        date: "Today",
+        type: "delete",
+        docId: id,
+        status: "deleted"
+      },
+      ...activityList
+    ];
+  }
+
+  demoAPI.updateState({ documents: updatedDocs, documentActivity: state.documentActivity });
+  saveDocuments(updatedDocs);
+  return true;
+}
+
+/**
+ * Simulates government verification of a pending document
+ */
+export function verifyDocument(id) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const docs = state.documents || [...INITIAL_DOCUMENTS];
+  
+  let targetDoc = null;
+  const updatedDocs = docs.map(doc => {
+    if (doc.id === id) {
+      targetDoc = {
+        ...doc,
+        status: "verified",
+        verified: true,
+        available: true
+      };
+      return targetDoc;
+    }
+    return doc;
+  });
+
+  state.documents = updatedDocs;
+  if (targetDoc) {
+    const activityList = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+    state.documentActivity = [
+      {
+        id: `ACT-${Date.now()}`,
+        title: `${targetDoc.name} verified via Demo Mesh`,
+        time: "Today",
+        date: "Today",
+        type: "verified",
+        docId: targetDoc.id,
+        status: "verified"
+      },
+      ...activityList
+    ];
+  }
+
+  demoAPI.updateState({ documents: updatedDocs, documentActivity: state.documentActivity });
+  saveDocuments(updatedDocs);
+
+  // Trigger Notification (matches SIH presentation demo flow 2)
+  if (targetDoc) {
+    createNotification({
+      type: "document",
+      title: "Document Verification",
+      message: `Your ${targetDoc.name} has completed demo verification.`,
+      documentId: targetDoc.id,
+      targetUrl: `/documents/${targetDoc.id}`
+    });
+  }
+
+  return targetDoc;
+}
+
+/**
+ * Checks if user has a verified/available document matching the given type
+ */
+export function hasDocument(type) {
+  if (!type) return false;
+  const docs = getDocuments();
+  const t = type.toLowerCase().trim();
+  return docs.some(d => {
+    const dType = (d.type || '').toLowerCase();
+    const dName = (d.name || '').toLowerCase();
+    const dCat = (d.category || '').toLowerCase();
+    const matches = dType.includes(t) || dName.includes(t) || dCat.includes(t) || t.includes(dType) || t.includes(dName);
+    return matches && (d.available || d.status === 'verified');
+  });
+}
+
+/**
+ * Marks a document as reused in an eligible service application
+ */
+export function reuseDocument(id, serviceId) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const docs = state.documents || [...INITIAL_DOCUMENTS];
+  
+  let targetDoc = null;
+  const updatedDocs = docs.map(doc => {
+    if (doc.id === id) {
+      const usedInList = doc.usedIn || [];
+      const updatedUsedIn = usedInList.includes(serviceId) ? usedInList : [...usedInList, serviceId];
+      targetDoc = { ...doc, usedIn: updatedUsedIn };
+      return targetDoc;
+    }
+    return doc;
+  });
+
+  state.documents = updatedDocs;
+  if (targetDoc) {
+    const activityList = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+    state.documentActivity = [
+      {
+        id: `ACT-${Date.now()}`,
+        title: `${targetDoc.name} reused for ${serviceId}`,
+        time: "Today",
+        date: "Today",
+        type: "reuse",
+        docId: targetDoc.id,
+        status: "reused"
+      },
+      ...activityList
+    ];
+  }
+
+  demoAPI.updateState({ documents: updatedDocs, documentActivity: state.documentActivity });
+  saveDocuments(updatedDocs);
+  return targetDoc;
+}
+
+/**
+ * Retrieves the application history where a document was reused
+ */
+export function getDocumentUsage(id) {
+  const doc = getDocumentById(id);
+  if (!doc || !doc.usedIn) return [];
+  const state = demoAPI.getState();
+  const apps = state.applications || [];
+  
+  return doc.usedIn.map(ref => {
+    const foundApp = apps.find(a => a.id === ref || a.serviceId === ref);
+    if (foundApp) {
+      return {
+        id: foundApp.id,
+        serviceName: foundApp.serviceName,
+        status: foundApp.status,
+        date: foundApp.submittedDate || "Recent"
+      };
+    }
+    return {
+      id: ref,
+      serviceName: ref.replace(/[-_]/g, ' ').toUpperCase(),
+      status: "In Progress",
+      date: "Recent"
+    };
+  });
+}
+
+/**
+ * Returns recent document activity log
+ */
+export function getDocumentActivity() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.documentActivity || INITIAL_DOCUMENT_ACTIVITY;
+}
+
+/**
+ * Adds an item to the document activity log
+ */
+export function addDocumentActivity(activity) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const list = state.documentActivity || [...INITIAL_DOCUMENT_ACTIVITY];
+  const newActivity = {
+    id: `ACT-${Date.now()}`,
+    time: "Today",
+    date: "Today",
+    ...activity
+  };
+  state.documentActivity = [newActivity, ...list];
+  demoAPI.updateState({ documentActivity: state.documentActivity });
+  return newActivity;
+}
+
+/**
+ * Persists documents array directly to localStorage
+ */
+export function saveDocuments(docs) {
+  try {
+    localStorage.setItem('dowlet1_documents', JSON.stringify(docs));
+  } catch (e) {
+    // Ignore storage quota
+  }
+}
+
+/**
+ * Loads documents from storage
+ */
+export function loadDocuments() {
+  return getDocuments();
+}
+
+/**
+ * Resets document demo to pristine mock data
+ */
+export function resetDocumentDemo() {
+  demoAPI.init();
+  demoAPI.updateState({
+    documents: INITIAL_DOCUMENTS,
+    documentActivity: INITIAL_DOCUMENT_ACTIVITY
+  });
+  try {
+    localStorage.removeItem('dowlet1_documents');
+  } catch (e) {
+    // Ignore
+  }
+  return INITIAL_DOCUMENTS;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DOWLET1 CENTRAL NOTIFICATION CENTRE FUNCTIONS
+// ══════════════════════════════════════════════════════════════════
+
+/**
+ * Returns all notifications from the central prototype state
+ */
+export function getNotifications() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.notifications || INITIAL_NOTIFICATIONS;
+}
+
+/**
+ * Returns a specific notification by its unique ID
+ */
+export function getNotificationById(id) {
+  const notifs = getNotifications();
+  return notifs.find(n => n.id === id) || null;
+}
+
+/**
+ * Returns unread notifications
+ */
+export function getUnreadNotifications() {
+  const notifs = getNotifications();
+  return notifs.filter(n => !n.read);
+}
+
+/**
+ * Returns total count of unread notifications
+ */
+export function getUnreadCount() {
+  return getUnreadNotifications().length;
+}
+
+/**
+ * Filters notifications by category: 'all' | 'application' | 'document' | 'service' | 'system'
+ */
+export function filterNotifications(type, notifsList = null) {
+  const notifs = notifsList || getNotifications();
+  if (!type || type.toLowerCase() === 'all') return notifs;
+  const t = type.toLowerCase().trim();
+  // Support both singular and plural forms (applications -> application, documents -> document, etc.)
+  const normType = t.replace(/s$/, '');
+  return notifs.filter(n => {
+    const itemType = (n.type || '').toLowerCase().replace(/s$/, '');
+    return itemType === normType;
+  });
+}
+
+/**
+ * Searches notifications by query across title, message, applicationId, serviceId, and documentId
+ */
+export function searchNotifications(query, notifsList = null) {
+  const notifs = notifsList || getNotifications();
+  if (!query || !query.trim()) return notifs;
+  const q = query.toLowerCase().trim();
+  return notifs.filter(n => 
+    (n.title && n.title.toLowerCase().includes(q)) ||
+    (n.message && n.message.toLowerCase().includes(q)) ||
+    (n.applicationId && n.applicationId.toLowerCase().includes(q)) ||
+    (n.serviceId && n.serviceId.toLowerCase().includes(q)) ||
+    (n.documentId && n.documentId.toLowerCase().includes(q)) ||
+    (n.type && n.type.toLowerCase().includes(q))
+  );
+}
+
+/**
+ * Marks a specific notification as read
+ */
+export function markAsRead(id) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const notifs = state.notifications || [...INITIAL_NOTIFICATIONS];
+  let target = null;
+  const updated = notifs.map(n => {
+    if (n.id === id) {
+      target = { ...n, read: true };
+      return target;
+    }
+    return n;
+  });
+  state.notifications = updated;
+  demoAPI.updateState({ notifications: updated });
+  saveNotifications(updated);
+  return target;
+}
+
+/**
+ * Marks all notifications as read
+ */
+export function markAllAsRead() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const notifs = state.notifications || [...INITIAL_NOTIFICATIONS];
+  const updated = notifs.map(n => ({ ...n, read: true }));
+  state.notifications = updated;
+  demoAPI.updateState({ notifications: updated });
+  saveNotifications(updated);
+  return updated;
+}
+
+/**
+ * Alias for backward compatibility
+ */
+export function markNotificationsAsRead() {
+  return markAllAsRead();
+}
+
+/**
+ * Deletes a notification from prototype list
+ */
+export function deleteNotification(id) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const notifs = state.notifications || [...INITIAL_NOTIFICATIONS];
+  const updated = notifs.filter(n => n.id !== id);
+  state.notifications = updated;
+  demoAPI.updateState({ notifications: updated });
+  saveNotifications(updated);
+  return true;
+}
+
+/**
+ * Creates and prepends a new notification to the prototype state
+ */
+export function createNotification(dataOrApp, message) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const notifs = state.notifications || [...INITIAL_NOTIFICATIONS];
+  
+  // Format ID like NOT-007
+  const newId = `NOT-${String(notifs.length + 1).padStart(3, '0')}`;
+  
+  let data = dataOrApp || {};
+  if (dataOrApp && dataOrApp.id && !dataOrApp.title && message) {
+    // Called as createNotification(application, message)
+    data = {
+      type: "application",
+      title: "Application Status Updated",
+      message: message,
+      applicationId: dataOrApp.id,
+      targetUrl: `/applications/${dataOrApp.id}`
+    };
+  }
+  
+  // Determine target URL if not provided
+  let url = data.targetUrl;
+  if (!url) {
+    if (data.applicationId) url = `/applications/${data.applicationId}`;
+    else if (data.documentId) url = `/documents/${data.documentId}`;
+    else if (data.serviceId) url = `/service-details/${data.serviceId}`;
+    else url = '/notifications';
+  }
+
+  const newNotif = {
+    id: newId,
+    type: data.type || "system", // "application" | "document" | "service" | "system"
+    title: data.title || "Notification",
+    message: data.message || "",
+    time: data.time || "Just now",
+    timestamp: data.timestamp || new Date().toISOString(),
+    read: false,
+    applicationId: data.applicationId || null,
+    documentId: data.documentId || null,
+    serviceId: data.serviceId || null,
+    targetUrl: url
+  };
+
+  const updated = [newNotif, ...notifs];
+  state.notifications = updated;
+  demoAPI.updateState({ notifications: updated });
+  saveNotifications(updated);
+  return newNotif;
+}
+
+/**
+ * Opens a notification: marks it as read and returns notification
+ */
+export function openNotification(id) {
+  return markAsRead(id);
+}
+
+/**
+ * Persists notifications directly to localStorage
+ */
+export function saveNotifications(notifs) {
+  try {
+    localStorage.setItem('dowlet1_notifications', JSON.stringify(notifs));
+  } catch (e) {
+    // Ignore storage quota
+  }
+}
+
+/**
+ * Loads notifications from storage
+ */
+export function loadNotifications() {
+  return getNotifications();
+}
+
+/**
+ * Resets notification demo to pristine mock data
+ */
+export function resetNotificationDemo() {
+  demoAPI.init();
+  demoAPI.updateState({
+    notifications: INITIAL_NOTIFICATIONS
+  });
+  try {
+    localStorage.removeItem('dowlet1_notifications');
+  } catch (e) {
+    // Ignore
+  }
+  return INITIAL_NOTIFICATIONS;
+}
+
+// ══════════════════════════════════════════════════════════════════
+// DOWLET1 CENTRAL PROFILE & SETTINGS FUNCTIONS
+// ══════════════════════════════════════════════════════════════════
+
+/**
+ * Returns current citizen profile
+ */
+export function getProfile() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.profile || { ...INITIAL_PROFILE };
+}
+
+/**
+ * Updates profile fields and syncs user demographic state
+ */
+export function updateProfile(data) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const current = state.profile || { ...INITIAL_PROFILE, ...(state.user || {}) };
+  const updated = { ...current, ...data };
+  state.profile = updated;
+  
+  // Sync state.user
+  if (!state.user) state.user = { ...INITIAL_STATE.user };
+  if (updated.fullName) {
+    state.user.name = updated.fullName;
+    state.user.fullName = updated.fullName;
+  }
+  if (updated.email) state.user.email = updated.email;
+  if (updated.mobile) state.user.mobile = updated.mobile;
+  if (updated.dob) state.user.dob = updated.dob;
+  if (updated.state) state.user.state = updated.state;
+  if (updated.district) state.user.district = updated.district;
+  if (updated.address) state.user.address = updated.address;
+  if (updated.annualIncome) state.user.income = updated.annualIncome;
+
+  demoAPI.updateState({ profile: updated, user: state.user });
+  saveProfile(updated);
+  return updated;
+}
+
+/**
+ * Persists profile to localStorage
+ */
+export function saveProfile(data) {
+  try {
+    localStorage.setItem('dowlet1_profile', JSON.stringify(data));
+  } catch (e) {}
+}
+
+/**
+ * Loads profile
+ */
+export function loadProfile() {
+  return getProfile();
+}
+
+/**
+ * Returns consent history logs
+ */
+export function getConsentHistory() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.consentHistory || INITIAL_CONSENT_HISTORY;
+}
+
+/**
+ * Returns notification preferences
+ */
+export function getNotificationSettings() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.notificationSettings || INITIAL_NOTIFICATION_SETTINGS;
+}
+
+/**
+ * Updates a specific notification preference
+ */
+export function updateNotificationSetting(key, value) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const current = state.notificationSettings || { ...INITIAL_NOTIFICATION_SETTINGS };
+  current[key] = value;
+  state.notificationSettings = current;
+  demoAPI.updateState({ notificationSettings: current });
+  try {
+    localStorage.setItem('dowlet1_notif_settings', JSON.stringify(current));
+  } catch (e) {}
+  return current;
+}
+
+/**
+ * Returns current language preference
+ */
+export function getLanguage() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.language || "English";
+}
+
+/**
+ * Updates citizen language preference
+ */
+export function updateLanguage(lang) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  state.language = lang;
+  demoAPI.updateState({ language: lang });
+  try {
+    localStorage.setItem('dowlet1_language', lang);
+  } catch (e) {}
+  return lang;
+}
+
+/**
+ * Returns security settings
+ */
+export function getSecuritySettings() {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  return state.securitySettings || INITIAL_SECURITY_SETTINGS;
+}
+
+/**
+ * Updates a security setting
+ */
+export function updateSecuritySetting(key, value) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const current = state.securitySettings || { ...INITIAL_SECURITY_SETTINGS };
+  current[key] = value;
+  state.securitySettings = current;
+  demoAPI.updateState({ securitySettings: current });
+  try {
+    localStorage.setItem('dowlet1_security_settings', JSON.stringify(current));
+  } catch (e) {}
+  return current;
+}
+
+/**
+ * Submits citizen feedback
+ */
+export function submitFeedback(data) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const list = state.feedback || [];
+  const item = {
+    id: `FB-${Date.now()}`,
+    rating: data.rating || 5,
+    comment: data.comment || "",
+    timestamp: new Date().toISOString()
+  };
+  state.feedback = [item, ...list];
+  demoAPI.updateState({ feedback: state.feedback });
+  try {
+    localStorage.setItem('dowlet1_feedback', JSON.stringify(state.feedback));
+  } catch (e) {}
+  return item;
+}
+
+/**
+ * Submits a citizen support ticket / problem report
+ */
+export function submitSupportRequest(data) {
+  demoAPI.init();
+  const state = demoAPI.getState();
+  const list = state.supportRequests || [];
+  const item = {
+    id: `TKT-${Math.floor(100000 + Math.random() * 900000)}`,
+    category: data.category || "General",
+    description: data.description || "",
+    status: "Submitted",
+    timestamp: new Date().toISOString()
+  };
+  state.supportRequests = [item, ...list];
+  demoAPI.updateState({ supportRequests: state.supportRequests });
+  try {
+    localStorage.setItem('dowlet1_support_requests', JSON.stringify(state.supportRequests));
+  } catch (e) {}
+  return item;
+}
+
+/**
+ * Navigates to Profile
+ */
+export function openProfile(navigate) {
+  if (navigate) navigate('/profile');
+}
+
+/**
+ * Navigates to Consent Settings
+ */
+export function openConsentSettings(navigate) {
+  if (navigate) navigate('/profile?tab=consent');
+}
+
+/**
+ * Navigates to Privacy & Security
+ */
+export function openPrivacySettings(navigate) {
+  if (navigate) navigate('/privacy');
+}
+
+/**
+ * Citizen Logout simulation
+ */
+export function logout(navigate) {
+  try {
+    localStorage.removeItem('dowlet1_auth_token');
+    localStorage.removeItem('dowlet1_session');
+    localStorage.removeItem('dowlet1_active_role');
+  } catch (e) {}
+  if (navigate) navigate('/login');
+}
+
+/**
+ * Resets profile and settings demo to initial mock values
+ */
+export function resetProfileDemo() {
+  demoAPI.init();
+  demoAPI.updateState({
+    profile: INITIAL_PROFILE,
+    user: {
+      ...INITIAL_STATE.user,
+      name: INITIAL_PROFILE.fullName,
+      fullName: INITIAL_PROFILE.fullName,
+      dob: INITIAL_PROFILE.dob,
+      mobile: INITIAL_PROFILE.rawMobile,
+      income: "₹1,50,000"
+    },
+    consentSettings: INITIAL_CONSENT_SETTINGS,
+    notificationSettings: INITIAL_NOTIFICATION_SETTINGS,
+    securitySettings: INITIAL_SECURITY_SETTINGS,
+    language: "English"
+  });
+  try {
+    localStorage.removeItem('dowlet1_profile');
+    localStorage.removeItem('dowlet1_consent_settings');
+    localStorage.removeItem('dowlet1_notif_settings');
+    localStorage.removeItem('dowlet1_language');
+    localStorage.removeItem('dowlet1_security_settings');
+  } catch (e) {}
+  return INITIAL_PROFILE;
+}
 
 

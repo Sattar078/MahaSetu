@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect, useRef } from 'react';
-import { ChevronLeft, ArrowRight } from 'lucide-react';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
+import AuthResponsiveContainer from '../../components/AuthResponsiveContainer';
 
 export default function OtpVerification() {
   const navigate = useNavigate();
@@ -36,89 +37,72 @@ export default function OtpVerification() {
   };
 
   return (
-    <div
-      className="flex flex-col min-h-[100dvh] bg-cover bg-center bg-no-repeat relative"
-      style={{ backgroundImage: `url('https://i.pinimg.com/736x/d1/eb/1a/d1eb1aed415bd2745a4e6c1a8aba837f.jpg')` }}
+    <AuthResponsiveContainer
+      title="Verify Mobile Number"
+      subtitle="Enter the 6-digit security code sent to your registered mobile."
+      showBackButton={true}
+      maxWidth="max-w-md"
     >
-      {/* ── Dark scrim for legibility ── */}
-      <div className="absolute inset-0 bg-black/60 backdrop-blur-[2px]" />
+      <div className="text-center mb-6">
+        <p className="text-xs text-white/70 mb-1">One-Time Password sent to</p>
+        <p className="text-sm font-bold text-white tracking-widest">+91 98765 43210</p>
+      </div>
 
-      <div className="relative z-10 flex flex-col min-h-[100dvh]">
-        
-        {/* Header bar */}
-        <div className="px-4 py-4 flex items-center justify-between border-b border-white/10">
-          <button onClick={() => navigate(-1)} className="p-2 text-white/80 hover:text-white transition-colors rounded-full hover:bg-white/10">
-            <ChevronLeft size={24} />
+      {/* OTP Inputs */}
+      <div className="flex justify-between gap-2 sm:gap-3 mb-6">
+        {otp.map((digit, i) => (
+          <input
+            key={i}
+            ref={(el) => (inputsRef.current[i] = el)}
+            type="text"
+            inputMode="numeric"
+            maxLength={1}
+            value={digit}
+            onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
+            className={`w-11 sm:w-12 h-14 text-center text-xl font-bold rounded-xl outline-none transition-all shadow-inner ${
+              digit ? 'bg-white/30 border border-white/60 text-white' : 'bg-white/10 border border-white/20 text-white/50'
+            } focus:border-white focus:bg-white/25 focus:ring-2 focus:ring-white/20`}
+          />
+        ))}
+      </div>
+
+      {/* Resend timer */}
+      <div className="text-center mb-6">
+        {timer > 0 ? (
+          <p className="text-xs text-white/60">
+            Resend OTP in <span className="font-bold text-white">00:{String(timer).padStart(2, '0')}</span>
+          </p>
+        ) : (
+          <button 
+            type="button"
+            onClick={() => setTimer(30)} 
+            className="text-xs font-bold text-white hover:underline transition-all"
+          >
+            Resend OTP Code
           </button>
-          <div className="flex items-center gap-1.5">
-            <span className="text-xl drop-shadow-md">🇮🇳</span>
-            <span className="text-lg font-extrabold text-white tracking-widest uppercase drop-shadow-md">DOWLET1</span>
-          </div>
-          <div className="w-10" /> {/* Spacer */}
-        </div>
-
-        <div className="flex-1 px-6 py-12 flex flex-col justify-center items-center">
-          
-          <div className="bg-white/10 backdrop-blur-md border border-white/20 rounded-3xl p-8 shadow-2xl w-full max-w-sm text-center">
-            
-            <h2 className="text-xl font-bold text-white mb-2 drop-shadow-md">Verify Mobile Number</h2>
-            <p className="text-xs text-white/70 mb-1">We've sent a 6-digit OTP to</p>
-            <p className="text-sm font-semibold text-white mb-8 tracking-wide">+91 98765 43210</p>
-
-            {/* OTP Inputs */}
-            <div className="flex justify-between gap-2 mb-8">
-              {otp.map((digit, i) => (
-                <input
-                  key={i}
-                  ref={(el) => (inputsRef.current[i] = el)}
-                  type="text"
-                  inputMode="numeric"
-                  maxLength={1}
-                  value={digit}
-                  onChange={(e) => handleChange(i, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(i, e)}
-                  className={`w-11 h-14 text-center text-xl font-bold rounded-xl outline-none transition-all shadow-inner ${
-                    digit ? 'bg-white/30 border border-white/50 text-white' : 'bg-white/10 border border-white/20 text-white/50'
-                  } focus:border-white focus:bg-white/20`}
-                />
-              ))}
-            </div>
-
-            {/* Resend timer */}
-            <div className="text-center mb-8">
-              {timer > 0 ? (
-                <p className="text-xs text-white/60">
-                  Resend OTP in <span className="font-bold text-white">00:{String(timer).padStart(2, '0')}</span>
-                </p>
-              ) : (
-                <button onClick={() => setTimer(30)} className="text-xs font-bold text-white hover:underline transition-all">
-                  Resend OTP
-                </button>
-              )}
-            </div>
-
-            <button 
-              disabled={!isComplete}
-              onClick={handleVerify}
-              className={`w-full py-4 px-4 font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg ${
-                isComplete 
-                  ? 'bg-white hover:bg-slate-50 text-[#0d599f] active:scale-[0.98]' 
-                  : 'bg-white/30 text-white/50 cursor-not-allowed'
-              }`}
-            >
-              VERIFY <ArrowRight size={16} />
-            </button>
-          </div>
-
-        </div>
+        )}
       </div>
 
-      {/* ── Tricolor bar ── */}
-      <div className="absolute bottom-0 left-0 w-full flex z-20 pointer-events-none">
-        <div className="flex-1 h-1 bg-[#e07520]" />
-        <div className="flex-1 h-1 bg-white" />
-        <div className="flex-1 h-1 bg-[#047857]" />
+      <button 
+        disabled={!isComplete}
+        onClick={handleVerify}
+        className={`w-full py-3.5 px-4 font-bold text-sm rounded-xl transition-all flex items-center justify-center gap-2 shadow-lg mb-4 ${
+          isComplete 
+            ? 'bg-white hover:bg-slate-50 text-[#0d599f] active:scale-[0.98]' 
+            : 'bg-white/25 text-white/40 cursor-not-allowed'
+        }`}
+      >
+        <span>VERIFY & CONTINUE</span>
+        <ArrowRight size={16} />
+      </button>
+
+      <div className="text-center pt-2">
+        <p className="text-[11px] text-white/60 flex items-center justify-center gap-1">
+          <ShieldCheck size={13} className="text-emerald-400" />
+          <span>Encrypted SMS verification via National Gateway</span>
+        </p>
       </div>
-    </div>
+    </AuthResponsiveContainer>
   );
 }

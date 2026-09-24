@@ -1,10 +1,12 @@
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 import { AppHeader } from '../../components/Navigation';
 import { PrimaryButton, SecondaryButton } from '../../components/Buttons';
 import { CheckCircle, ShieldCheck } from 'lucide-react';
 
 export default function VerifiedInfo() {
   const navigate = useNavigate();
+  const { serviceId } = useParams();
+  const location = useLocation();
 
   return (
     <div className="flex flex-col min-h-[100dvh] bg-white">
@@ -45,10 +47,10 @@ export default function VerifiedInfo() {
         </div>
 
         <div className="mt-auto space-y-3">
-          <PrimaryButton onClick={() => navigate('/apply/scholarship/documents')}>
-            Use This Information
+          <PrimaryButton onClick={() => navigate(`/apply/${serviceId || 'income_certificate'}/documents${location.search}`)}>
+            Use This Information & Check Documents
           </PrimaryButton>
-          <SecondaryButton onClick={() => navigate('/apply/scholarship/documents')}>
+          <SecondaryButton onClick={() => navigate(`/apply/${serviceId || 'income_certificate'}/documents${location.search}`)}>
             Upload New Document
           </SecondaryButton>
         </div>

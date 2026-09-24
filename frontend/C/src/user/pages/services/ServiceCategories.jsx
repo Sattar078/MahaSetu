@@ -70,74 +70,80 @@ export default function ServiceCategories() {
           </form>
 
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Explore By Category</h3>
-          <div className="grid grid-cols-4 gap-y-6 gap-x-2 mb-8">
+          <div className="grid grid-cols-4 sm:grid-cols-6 lg:grid-cols-8 gap-3 sm:gap-4 mb-8">
             {categories.map((cat) => {
               const Icon = cat.icon;
               return (
                 <button
                   key={cat.id}
                   onClick={() => navigate(cat.id === 'all' ? '/services/certificates' : `/services/${cat.id}`)}
-                  className="flex flex-col items-center gap-2 group"
+                  className="flex flex-col items-center gap-2 group p-2 rounded-2xl hover:bg-white transition-colors"
                 >
                   <div className={`w-14 h-14 rounded-2xl ${cat.color} flex items-center justify-center group-hover:scale-105 transition-transform shadow-sm border border-slate-100`}>
                     <Icon size={24} />
                   </div>
-                  <span className="text-[10px] font-bold text-slate-700 text-center">{cat.label}</span>
+                  <span className="text-[11px] font-bold text-slate-700 text-center leading-tight">{cat.label}</span>
                 </button>
               );
             })}
           </div>
 
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Recommended For You</h3>
-          <div className="space-y-3 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
             {recommended.map(s => (
-              <div key={s.id} className="bg-gradient-to-br from-[#0d599f] to-[#000080] p-5 rounded-2xl text-white shadow-md relative overflow-hidden">
+              <div key={s.id} className="bg-gradient-to-br from-[#0d599f] to-[#000080] p-5 rounded-2xl text-white shadow-md relative overflow-hidden flex flex-col justify-between">
                 <div className="absolute -right-4 -top-4 opacity-10">
                   <FileText size={100} />
                 </div>
-                <h4 className="font-bold mb-1 relative z-10 flex items-center gap-2">
-                  <GraduationCap size={16} />
-                  {s.name}
-                </h4>
-                <div className="space-y-1 mb-4 relative z-10">
-                  <p className="text-[10px] text-blue-100 flex items-center gap-1"><CheckCircle2 size={12}/> Profile information available</p>
-                  <p className="text-[10px] text-blue-100 flex items-center gap-1"><CheckCircle2 size={12}/> Required documents available</p>
+                <div>
+                  <h4 className="font-bold mb-1 relative z-10 flex items-center gap-2 text-sm">
+                    <GraduationCap size={16} />
+                    {s.name}
+                  </h4>
+                  <p className="text-xs text-blue-100/80 mb-4 relative z-10 line-clamp-2">{s.description}</p>
                 </div>
-                <div className="flex items-center gap-3 relative z-10">
+                <div className="flex gap-2 relative z-10 pt-2 border-t border-white/10">
                   <button 
                     onClick={() => navigate(`/service-details/${s.id}`)}
-                    className="bg-white/20 hover:bg-white/30 transition text-xs font-bold py-2 px-4 rounded-xl backdrop-blur-sm"
+                    className="flex-1 bg-white text-[#000080] font-bold text-xs py-2 rounded-xl hover:bg-slate-100 transition shadow-sm"
                   >
                     View Details
                   </button>
-                  <span className="text-[10px] text-white/50 italic">Prototype recommendation</span>
+                  <button 
+                    onClick={() => navigate(`/apply/${s.id}/start`)}
+                    className="flex-1 bg-amber-400 hover:bg-amber-300 text-slate-950 font-bold text-xs py-2 rounded-xl transition shadow-sm"
+                  >
+                    Apply Now
+                  </button>
                 </div>
               </div>
             ))}
           </div>
 
           <h3 className="text-xs font-bold text-slate-500 uppercase tracking-wider mb-4">Popular Services</h3>
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {popular.map(s => {
               const isSaved = savedIds.includes(s.id);
               return (
-                <div key={s.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col">
-                  <div className="flex items-start justify-between mb-2">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#0d599f]">
-                        <FileText size={20} />
-                      </div>
-                      <div>
-                        <h4 className="font-bold text-sm text-slate-900">{s.name}</h4>
-                        <p className="text-[10px] text-slate-500">{s.department}</p>
+                <div key={s.id} className="bg-white p-4 rounded-2xl border border-slate-200 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+                  <div>
+                    <div className="flex items-start justify-between mb-2">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-xl bg-blue-50 flex items-center justify-center text-[#0d599f]">
+                          <FileText size={20} />
+                        </div>
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900 leading-snug">{s.name}</h4>
+                          <p className="text-[10px] text-slate-500">{s.department}</p>
+                        </div>
                       </div>
                     </div>
+                    <p className="text-xs text-slate-600 mb-4 line-clamp-2">{s.description}</p>
                   </div>
-                  <p className="text-xs text-slate-600 mb-4 line-clamp-2">{s.description}</p>
-                  <div className="flex gap-2 mt-auto pt-2 border-t border-slate-50">
+                  <div className="flex gap-2 mt-auto pt-2 border-t border-slate-100">
                     <button 
                       onClick={() => navigate(`/service-details/${s.id}`)}
-                      className="flex-1 bg-slate-50 hover:bg-slate-100 text-[#0d599f] font-bold text-xs py-2.5 rounded-xl transition"
+                      className="flex-1 bg-slate-50 hover:bg-slate-100 text-[#000080] font-bold text-xs py-2.5 rounded-xl transition"
                     >
                       View Details
                     </button>

@@ -95,3 +95,51 @@ button, a, input, select, textarea {
 .chakra-spin {
   animation: chakra-burst 0.7s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
+
+/* ═══════════════════════════════════════════════════
+   DESKTOP WEBSITE STYLES
+   ═══════════════════════════════════════════════════ */
+
+/* Hero fade-in animation */
+@keyframes desktop-fade-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.desktop-hero-fade-in {
+  animation: desktop-fade-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) 0.2s both;
+}
+
+/* Hero phone slide-up */
+@keyframes desktop-slide-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.desktop-hero-slide-up {
+  animation: desktop-slide-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.5s both;
+}
+
+/* Floating badges around phone */
+@keyframes desktop-float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-8px); }
+}
+.desktop-float-badge {
+  animation: desktop-float 3s ease-in-out infinite;
+}
+
+/* Hide scrollbar utility (for horizontal scroll) */
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Desktop phone frame — when app pages are shown in desktop */
+@media (min-width: 1024px) {
+  body {
+    background: #e2e8f0 !important;
+    background-image: none !important;
+  }
+}

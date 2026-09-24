@@ -545,8 +545,8 @@ export default function ApplicationDetail() {
               </div>
 
               {/* State Emblem / Tricolor D Emblem */}
-              <div className="w-10 h-10 rounded-full bg-[#000080]/10 flex items-center justify-center text-[#000080] font-bold text-xl mx-auto mb-2 border border-[#000080]/20 shadow-sm">
-                ☸
+              <div className="w-12 h-12 rounded-full bg-white p-1 flex items-center justify-center mx-auto mb-2 border border-[#000080]/20 shadow-sm">
+                <img src="/dowlet-logo.png" alt="Emblem" className="w-full h-full object-contain" />
               </div>
 
               <h3 className="font-extrabold text-xs text-slate-800 tracking-wider uppercase">

@@ -1,29 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { AppHeader } from '../../components/Navigation';
 import { PrimaryButton } from '../../components/Buttons';
 import { CheckCircle2, ChevronRight, Star, Clock, FileText, AlertCircle, Bookmark, BookmarkCheck, Bot } from 'lucide-react';
-import { demoAPI } from '../../../utils/demoState';
+import { demoAPI, isServiceSaved, saveService, removeSavedService } from '../../../utils/demoState';
 
 export default function ServiceDetails() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
   const [service, setService] = useState(null);
   const [isSaved, setIsSaved] = useState(false);
-  const [showToast, setShowToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState(null);
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     demoAPI.init();
-    // Default to 'scholarship' if no id provided (to prevent breaks on old routes)
-    const sId = id || 'scholarship';
-    const s = demoAPI.getService(sId);
+    const passedService = location.state?.service;
+    const sId = id || location.state?.serviceId || passedService?.id || 'scholarship';
+    const s = demoAPI.getService(sId) || passedService;
     if (s) {
       setService(s);
-      setIsSaved(demoAPI.isServiceSaved(s.id));
+      setIsSaved(isServiceSaved(s.id));
       setUser(demoAPI.getUser());
     }
-  }, [id]);
+  }, [id, location.state]);
 
   if (!service) {
     return (
@@ -40,13 +41,15 @@ export default function ServiceDetails() {
 
   const handleSave = () => {
     if (isSaved) {
-      demoAPI.removeSavedService(service.id);
+      removeSavedService(service.id);
       setIsSaved(false);
+      setToastMessage("Removed from Saved Services");
+      setTimeout(() => setToastMessage(null), 3000);
     } else {
-      demoAPI.saveService(service.id);
+      saveService(service.id);
       setIsSaved(true);
-      setShowToast(true);
-      setTimeout(() => setShowToast(false), 3000);
+      setToastMessage("Service saved");
+      setTimeout(() => setToastMessage(null), 3000);
     }
   };
 
@@ -61,12 +64,12 @@ export default function ServiceDetails() {
 
       {/* Toast Notification */}
       <div 
-        className={`fixed top-20 left-1/2 -translate-x-1/2 bg-[#138808] text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-3 transition-all duration-300 z-50 ${
-          showToast ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
+        className={`fixed top-20 left-1/2 -translate-x-1/2 bg-slate-900/95 text-white px-4 py-3 rounded-xl shadow-xl flex items-center gap-2.5 transition-all duration-300 z-50 border border-slate-700 ${
+          toastMessage ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4 pointer-events-none'
         }`}
       >
-        <CheckCircle2 size={20} />
-        <span className="text-sm font-bold whitespace-nowrap">Service saved successfully.</span>
+        <CheckCircle2 size={18} className="text-[#138808]" />
+        <span className="text-xs font-bold whitespace-nowrap">{toastMessage}</span>
       </div>
 
       <div className="px-5 pt-6 flex-1 flex flex-col space-y-6">
@@ -161,11 +164,22 @@ export default function ServiceDetails() {
         <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 p-4 pb-6 flex gap-3 z-40 max-w-md mx-auto shadow-[0_-4px_20px_rgba(0,0,0,0.05)]">
           <button 
             onClick={handleSave} 
-            className={`w-14 h-14 flex items-center justify-center rounded-2xl transition border shrink-0 ${
-              isSaved ? 'bg-amber-50 text-amber-500 border-amber-200' : 'bg-slate-50 text-slate-400 border-slate-200 hover:bg-slate-100'
+            aria-label={isSaved ? "Remove from saved services" : "Save service"}
+            className={`px-4 h-12 flex items-center justify-center gap-1.5 rounded-2xl transition border shrink-0 text-xs font-bold ${
+              isSaved ? 'bg-amber-50 text-amber-700 border-amber-300 shadow-xs' : 'bg-slate-50 text-slate-600 border-slate-200 hover:bg-slate-100'
             }`}
           >
-            {isSaved ? <BookmarkCheck size={24} /> : <Bookmark size={24} />}
+            {isSaved ? (
+              <>
+                <BookmarkCheck size={18} className="text-amber-600" />
+                <span>✓ Saved</span>
+              </>
+            ) : (
+              <>
+                <Bookmark size={18} />
+                <span>Save</span>
+              </>
+            )}
           </button>
           
           <PrimaryButton onClick={() => navigate(`/eligibility/${service.id}`)} className="flex-1 py-4 text-xs bg-slate-800 hover:bg-slate-900 border-none shadow-md">

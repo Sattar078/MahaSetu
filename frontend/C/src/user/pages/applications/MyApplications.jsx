@@ -262,23 +262,24 @@ export default function MyApplications() {
         </div>
 
         {/* Applications List */}
-        <div className="px-5 pt-1 space-y-4">
+        <div className="px-5 pt-1">
           {sortedApplications.length > 0 ? (
-            sortedApplications.map((app) => (
-              <div
-                key={app.id}
-                className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm relative overflow-hidden transition-all hover:shadow-md"
-              >
-                {/* Accent line on left */}
-                <div 
-                  className={`absolute left-0 top-0 bottom-0 w-1 ${
-                    app.statusType === 'completed' 
-                      ? 'bg-[#138808]' 
-                      : app.statusType === 'action-required' 
-                        ? 'bg-amber-500' 
-                        : 'bg-[#000080]'
-                  }`} 
-                />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {sortedApplications.map((app) => (
+                <div
+                  key={app.id}
+                  className="bg-white rounded-2xl p-4 border border-slate-200 shadow-sm relative overflow-hidden transition-all hover:shadow-md flex flex-col justify-between"
+                >
+                  {/* Accent line on left */}
+                  <div 
+                    className={`absolute left-0 top-0 bottom-0 w-1 ${
+                      app.statusType === 'completed' 
+                        ? 'bg-[#138808]' 
+                        : app.statusType === 'action-required' 
+                          ? 'bg-amber-500' 
+                          : 'bg-[#000080]'
+                    }`} 
+                  />
 
                 {/* Header info */}
                 <div className="flex items-start justify-between gap-3 mb-2 pl-1">
@@ -345,8 +346,9 @@ export default function MyApplications() {
                   </div>
                 </div>
               </div>
-            ))
-          ) : (
+            ))}
+          </div>
+        ) : (
             <div className="bg-white rounded-2xl p-8 border border-slate-200 shadow-sm text-center">
               <div className="w-12 h-12 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
                 <FileText size={24} />

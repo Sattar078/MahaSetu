@@ -12,6 +12,11 @@ import OtpVerification from "./user/pages/auth/OtpVerification";
 import GovLogin from "./user/pages/auth/GovLogin";
 import ProfileSetup from "./user/pages/auth/ProfileSetup";
 import AuthSuccess from "./user/pages/auth/AuthSuccess";
+import RoleSelect from "./user/pages/auth/RoleSelect";
+import OfficerLogin from "./user/pages/auth/OfficerLogin";
+import AdminLogin from "./user/pages/auth/AdminLogin";
+import OfficerDashboard from "./user/pages/officer/OfficerDashboard";
+import AdminDashboard from "./user/pages/admin/AdminDashboard";
 
 // Main app
 import Home from "./user/pages/home/Home";
@@ -98,6 +103,11 @@ function App() {
         <Route path="/auth-success" element={<AuthSuccess />} />
         <Route path="/gov-login" element={<GovLogin />} />
         <Route path="/profile-setup" element={<ProfileSetup />} />
+        <Route path="/role-select" element={<RoleSelect />} />
+        <Route path="/officer-login" element={<OfficerLogin />} />
+        <Route path="/admin-login" element={<AdminLogin />} />
+        <Route path="/officer/dashboard" element={<OfficerDashboard />} />
+        <Route path="/admin/dashboard" element={<AdminDashboard />} />
 
         {/* ── Home & Discovery ── */}
         <Route path="/home" element={<Home />} />

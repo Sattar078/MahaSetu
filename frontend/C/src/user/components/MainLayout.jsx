@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { BottomNav } from './Navigation';
+import useDeviceMode from '../../utils/useDeviceMode';
+import DesktopLayout from './DesktopLayout';
 import { 
   Bell, Menu, User, X, Home as HomeIcon, Search, Sparkles, 
   ClipboardList, FileText, ShieldCheck, Bookmark, Landmark, 
   Megaphone, HelpCircle, MessageSquare, Settings, Globe, 
   Lock, FileCheck, Info, Shield, LogOut, MapPin, CheckCircle2
 } from 'lucide-react';
-import { getNotifications, markNotificationsAsRead } from '../../utils/demoState';
+import { getNotifications, markNotificationsAsRead, getProfile, logout } from '../../utils/demoState';
 
 /**
  * MainLayout — wraps authenticated pages with the bottom tab bar and top header/drawer.
@@ -15,12 +17,15 @@ import { getNotifications, markNotificationsAsRead } from '../../utils/demoState
 export default function MainLayout({ children }) {
   const navigate = useNavigate();
   const location = useLocation();
+  const mode = useDeviceMode();
+  const [profile, setProfile] = useState(getProfile());
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [notifications, setNotifications] = useState([]);
 
   useEffect(() => {
     setNotifications(getNotifications());
+    setProfile(getProfile());
   }, [location.pathname]);
 
   const refreshNotifications = () => {
@@ -51,7 +56,7 @@ export default function MainLayout({ children }) {
     setActiveDropdown(prev => prev === dropdownName ? null : dropdownName);
   };
 
-  return (
+  const mobileUI = (
     <div className="flex flex-col min-h-[100dvh] bg-slate-50 relative">
       
       {/* Drawer Overlay */}
@@ -77,15 +82,15 @@ export default function MainLayout({ children }) {
         <div className="relative p-5 bg-white border-b border-slate-100 overflow-hidden">
           {/* Flag Accent Bar */}
           <div className="absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r from-[#FF9933] via-slate-100 to-[#138808]"></div>
-          {/* Decorative Chakra Background Watermark */}
-          <div className="absolute -right-10 -top-10 text-[#000080]/5 text-[120px] select-none pointer-events-none">
-            ☸
+          {/* Decorative Logo Background Watermark */}
+          <div className="absolute -right-8 -top-8 w-32 h-32 opacity-[0.06] select-none pointer-events-none flex items-center justify-center">
+            <img src="/dowlet-logo.png" alt="" className="w-full h-full object-contain" />
           </div>
           
           <div className="flex items-center justify-between mb-4 mt-2 relative z-10">
             <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-[#000080]/10 flex items-center justify-center text-[#000080] font-bold shadow-sm border border-[#000080]/20 text-xl">
-                ☸
+              <div className="w-8 h-8 rounded-lg bg-white p-0.5 flex items-center justify-center shadow-sm border border-slate-200">
+                <img src="/pwa-192.png" alt="DOWLET1 Logo" className="w-full h-full object-contain" />
               </div>
               <span className="font-extrabold text-lg tracking-wide text-[#000080]">DOWLET1</span>
             </div>
@@ -100,11 +105,11 @@ export default function MainLayout({ children }) {
 
         {/* Profile Quick Link */}
         <div className="p-4 border-b border-slate-100 flex items-center gap-3 cursor-pointer hover:bg-slate-50 transition-colors" onClick={() => { setIsDrawerOpen(false); navigate('/profile'); }}>
-          <div className="w-12 h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] shrink-0 border-2 border-white shadow-sm">
-            <User size={24} />
+          <div className="w-12 h-12 rounded-full bg-[#FF9933]/10 flex items-center justify-center text-[#FF9933] shrink-0 border-2 border-white shadow-sm font-bold text-sm">
+            {profile.fullName ? profile.fullName.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'RK'}
           </div>
           <div className="flex-1">
-            <h4 className="font-bold text-slate-800 text-sm">Rahul Kumar</h4>
+            <h4 className="font-bold text-slate-800 text-sm">{profile.fullName || 'Rahul Kumar'}</h4>
             <p className="text-[11px] text-[#138808] font-medium">View Profile →</p>
           </div>
         </div>
@@ -118,6 +123,7 @@ export default function MainLayout({ children }) {
             <div className="flex flex-col">
               {[
                 { icon: HomeIcon, label: 'Home', action: () => { setIsDrawerOpen(false); navigate('/home'); } },
+                { icon: Bell, label: 'Notifications', badge: notifications.filter(n => !n.read).length > 0 ? `${notifications.filter(n => !n.read).length} new` : null, action: () => { setIsDrawerOpen(false); navigate('/notifications'); } },
                 { icon: Search, label: 'Explore Services', action: () => { setIsDrawerOpen(false); navigate('/services'); } },
                 { icon: Sparkles, label: 'AI Assistant', action: () => { setIsDrawerOpen(false); navigate('/ai'); } },
                 { icon: ClipboardList, label: 'My Applications', action: () => { setIsDrawerOpen(false); navigate('/applications'); } },
@@ -125,9 +131,16 @@ export default function MainLayout({ children }) {
                 { icon: ShieldCheck, label: 'Verified Information', action: () => { setIsDrawerOpen(false); navigate('/verified-info'); } },
                 { icon: Bookmark, label: 'Saved Services', action: () => { setIsDrawerOpen(false); navigate('/saved'); } },
               ].map((item, i) => (
-                <button key={i} onClick={item.action} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
-                  <item.icon size={18} className="text-slate-500" />
-                  <span className="text-sm font-medium text-slate-700">{item.label}</span>
+                <button key={i} onClick={item.action} className="flex items-center justify-between px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
+                  <div className="flex items-center gap-3">
+                    <item.icon size={18} className="text-slate-500" />
+                    <span className="text-sm font-medium text-slate-700">{item.label}</span>
+                  </div>
+                  {item.badge && (
+                    <span className="text-[10px] font-bold bg-red-100 text-red-600 px-2 py-0.5 rounded-full">
+                      {item.badge}
+                    </span>
+                  )}
                 </button>
               ))}
             </div>
@@ -138,10 +151,10 @@ export default function MainLayout({ children }) {
             <p className="px-5 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Government</p>
             <div className="flex flex-col">
               {[
-                { icon: Landmark, label: 'Government Departments' },
-                { icon: Megaphone, label: 'Announcements' },
+                { icon: Landmark, label: 'Government Departments', action: () => { setIsDrawerOpen(false); navigate('/services'); } },
+                { icon: Megaphone, label: 'Announcements', action: () => { setIsDrawerOpen(false); navigate('/notifications'); } },
               ].map((item, i) => (
-                <button key={i} onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
+                <button key={i} onClick={item.action} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
                   <item.icon size={18} className="text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">{item.label}</span>
                 </button>
@@ -154,10 +167,10 @@ export default function MainLayout({ children }) {
             <p className="px-5 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Support</p>
             <div className="flex flex-col">
               {[
-                { icon: HelpCircle, label: 'Help & Support' },
-                { icon: MessageSquare, label: 'Feedback' },
+                { icon: HelpCircle, label: 'Help & Support', action: () => { setIsDrawerOpen(false); navigate('/profile?section=help'); } },
+                { icon: MessageSquare, label: 'Feedback', action: () => { setIsDrawerOpen(false); navigate('/profile?section=feedback'); } },
               ].map((item, i) => (
-                <button key={i} onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
+                <button key={i} onClick={item.action} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
                   <item.icon size={18} className="text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">{item.label}</span>
                 </button>
@@ -170,12 +183,12 @@ export default function MainLayout({ children }) {
             <p className="px-5 py-2 text-[10px] font-bold text-slate-400 uppercase tracking-wider">Settings</p>
             <div className="flex flex-col">
               {[
-                { icon: Settings, label: 'Settings' },
-                { icon: Globe, label: 'Language' },
-                { icon: Lock, label: 'Privacy & Security' },
-                { icon: FileCheck, label: 'Consent & Data Sharing' },
+                { icon: Settings, label: 'Settings', action: () => { setIsDrawerOpen(false); navigate('/profile'); } },
+                { icon: Globe, label: 'Language', action: () => { setIsDrawerOpen(false); navigate('/profile?section=language'); } },
+                { icon: Lock, label: 'Privacy & Security', action: () => { setIsDrawerOpen(false); navigate('/privacy'); } },
+                { icon: FileCheck, label: 'Consent & Data Sharing', action: () => { setIsDrawerOpen(false); navigate('/profile?section=consent'); } },
               ].map((item, i) => (
-                <button key={i} onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
+                <button key={i} onClick={item.action} className="flex items-center gap-3 px-5 py-3 hover:bg-slate-50 transition-colors text-left w-full">
                   <item.icon size={18} className="text-slate-500" />
                   <span className="text-sm font-medium text-slate-700">{item.label}</span>
                 </button>
@@ -187,17 +200,25 @@ export default function MainLayout({ children }) {
           <div className="pb-4">
             <div className="flex flex-col">
               {[
-                { icon: Info, label: 'About DOWLET1' },
-                { icon: FileText, label: 'Terms & Conditions' },
-                { icon: Shield, label: 'Privacy Policy' },
+                { icon: Info, label: 'About DOWLET1', action: () => { setIsDrawerOpen(false); navigate('/profile?section=about'); } },
+                { icon: FileText, label: 'Terms & Conditions', action: () => { setIsDrawerOpen(false); navigate('/profile?section=about'); } },
+                { icon: Shield, label: 'Privacy Policy', action: () => { setIsDrawerOpen(false); navigate('/profile?section=about'); } },
               ].map((item, i) => (
-                <button key={i} onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50 transition-colors text-left w-full">
+                <button key={i} onClick={item.action} className="flex items-center gap-3 px-5 py-2.5 hover:bg-slate-50 transition-colors text-left w-full">
                   <item.icon size={16} className="text-slate-400" />
                   <span className="text-xs font-medium text-slate-500">{item.label}</span>
                 </button>
               ))}
               
-              <button onClick={() => setIsDrawerOpen(false)} className="flex items-center gap-3 px-5 py-4 mt-2 hover:bg-red-50 text-red-600 transition-colors text-left w-full">
+              <button 
+                onClick={() => {
+                  setIsDrawerOpen(false);
+                  if (window.confirm("Are you sure you want to logout?")) {
+                    logout(navigate);
+                  }
+                }} 
+                className="flex items-center gap-3 px-5 py-4 mt-2 hover:bg-red-50 text-red-600 transition-colors text-left w-full"
+              >
                 <LogOut size={18} />
                 <span className="text-sm font-bold">Logout</span>
               </button>
@@ -216,8 +237,8 @@ export default function MainLayout({ children }) {
             <Menu size={24} />
           </button>
           <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-full bg-[#000080]/10 flex items-center justify-center text-[#000080] font-bold text-xl shadow-sm">
-              ☸
+            <div className="w-8 h-8 rounded-lg bg-white p-0.5 flex items-center justify-center shadow-sm border border-slate-200">
+              <img src="/pwa-192.png" alt="DOWLET1 Logo" className="w-full h-full object-contain" />
             </div>
             <span className="font-extrabold text-[#000080] text-lg tracking-wide">DOWLET1</span>
           </div>
@@ -272,14 +293,16 @@ export default function MainLayout({ children }) {
           {/* Notifications Button */}
           <button 
             onClick={() => {
-              refreshNotifications();
-              toggleDropdown('notifications');
+              navigate('/notifications');
             }} 
-            className="text-slate-500 relative hover:text-[#000080] transition-colors p-1"
+            className="text-slate-600 relative hover:text-[#000080] transition-colors p-1"
+            title="Notification Centre"
           >
             <Bell size={20} />
             {notifications.some(n => !n.read) && (
-              <span className="absolute top-0.5 right-0.5 w-2.5 h-2.5 bg-red-500 rounded-full border-2 border-white animate-pulse"></span>
+              <span className="absolute -top-1 -right-1 min-w-[17px] h-[17px] px-1 bg-red-600 text-white text-[9px] font-black rounded-full flex items-center justify-center border-2 border-white shadow-xs">
+                {notifications.filter(n => !n.read).length}
+              </span>
             )}
           </button>
 
@@ -353,4 +376,12 @@ export default function MainLayout({ children }) {
       </div>
     </div>
   );
+
+  // Desktop: render full desktop website portal
+  if (mode === 'desktop') {
+    return <DesktopLayout>{children}</DesktopLayout>;
+  }
+
+  // Mobile / PWA: return mobile app shell with top drawer and bottom nav
+  return mobileUI;
 }
